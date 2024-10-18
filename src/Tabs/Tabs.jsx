@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveTab } from './tabsSlice';
-import Tab1 from './Tab1';
+import Tab1 from './TradingHistory';
 import Tab2 from './Tab2';
 import Tab3 from './Tab3';
 import './Tabs.css'
@@ -9,7 +8,6 @@ import './Tabs.css'
 const Tabs = () => {
     const dispatch = useDispatch();
     const activeTab = useSelector((state) => state.tabs.activeTab);
-    const tabData = useSelector((state) => state.tabs.tabData);
   
     // Function to render the appropriate component based on the active tab
     const renderTabContent = () => {
@@ -26,18 +24,8 @@ const Tabs = () => {
     };
   
     return (
-      <div className='tabs'>
-        <div className="tab-buttons">
-          {tabData.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => dispatch(setActiveTab(tab.id))}
-              className={activeTab === tab.id ? 'active' : ''}
-            >
-              Tab {tab.id + 1}
-            </button>
-          ))}
-        </div>
+      <div className='tab-panel'>
+       
         <div className="tab-content">
           {renderTabContent()}
         </div>

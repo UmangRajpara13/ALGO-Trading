@@ -33,6 +33,7 @@
 .company-name{
   /* flex: 1; */
   font-size: xx-large;
+  font-style: italic;
 }
 
 .clock{

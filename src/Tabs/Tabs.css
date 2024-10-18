@@ -1,9 +1,18 @@
-.tabs{
-    display: flex;
-    flex-direction: column;
-align-items: center;
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.tab-buttons{
-    height: 40px;
+.tab-buttons {
+  height: 40px;
+  display: flex;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+
+.tab-buttons > * {
+  background-color: var(--background);
+  color: var(--foreground);
 }

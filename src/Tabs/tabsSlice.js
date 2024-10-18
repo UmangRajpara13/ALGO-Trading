@@ -5,9 +5,9 @@ export const tabsSlice = createSlice({
     initialState: {
         activeTab: 0,
         tabData: [
-            { id: 0, content: "Trading History" },
-            { id: 1, content: "Positions" },
-            { id: 2, content: "Orders" },
+            { id: 0, title: 'History', content: "Trading History" },
+            { id: 1, title: 'Positions', content: "Live Trades" },
+            { id: 2, title: 'Orders', content: "Open Orders" },
         ],
     },
     reducers: {

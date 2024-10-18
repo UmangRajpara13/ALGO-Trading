@@ -1,0 +1,19 @@
+
+
+>> features
+
+1. Trading history
+-- it will be stored somewhere(say excel, )
+2. Live Positions
+3. Light/Dark mode
+
+
+first it should work for single user perfectly(i.e. complete trade management)
+then >Login feature< to accommodate multiple users 
+
+
+
+
+
+> technical
+Deploy to internet
