@@ -4,6 +4,7 @@
 }
 
 body {
+  height: 100vh;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -11,4 +12,9 @@ body {
   color: var(--foreground);
   /* border-radius: "50%"; */
   /* position: "absolute"; */
+}
+
+
+#root{
+  height: inherit;
 }

@@ -1,18 +1,29 @@
-.tab-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .tab-buttons {
-  height: 40px;
+  height: 100%;
   display: flex;
   background-color: var(--background);
   color: var(--foreground);
 }
-
 
 .tab-buttons > * {
   background-color: var(--background);
   color: var(--foreground);
+  border-color: grey;
+  border-left: 0px;
+  border-top: 0px;
+  border-bottom: 0px;
+  padding: 10px 10px;
+  font-size: large;
+}
+
+.tab-buttons > *:hover {
+  background-color: rgba(187, 187, 187, 0.5);
+}
+
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 6;
+  justify-content: center;
 }
