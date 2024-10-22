@@ -8,6 +8,7 @@ export const tabsSlice = createSlice({
             { id: 0, title: 'History', content: "Trading History" },
             { id: 1, title: 'Positions', content: "Live Trades" },
             { id: 2, title: 'Orders', content: "Open Orders" },
+            { id: 3, title: 'Config', content: "Trade Configs" },
         ],
     },
     reducers: {
