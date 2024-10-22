@@ -4,7 +4,7 @@ import Tab1 from './TradingHistory';
 import Tab2 from './Tab2';
 import Tab3 from './Tab3';
 import './Tabs.css'
-import TradeConfig from './TradeConfig';
+import TradeConfig from './StrategyConfig';
 
 const Tabs = () => {
   const dispatch = useDispatch();

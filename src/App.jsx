@@ -17,13 +17,13 @@ function App() {
 
 
   useEffect(() => {
-    axios.get('http://localhost:8000/hello')
-      .then((response) => {
-        console.log(response); // Log the response data to the console
-      })
-      .catch((error) => {
-        console.error('Error making API call:', error);
-      });
+    // axios.get('http://localhost:8000/hello')
+    //   .then((response) => {
+    //     console.log(response); // Log the response data to the console
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error making API call:', error);
+    //   });
   }, [])
 
   return (

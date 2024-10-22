@@ -8,6 +8,7 @@ import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 function CustomSlider() {
     const [isDarkActive, setIsActive] = useState(true);
 
+
     const toggleSlider = () => {
         setIsActive(!isDarkActive);
         SwitchTheme(!isDarkActive)

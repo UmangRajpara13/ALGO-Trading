@@ -15,17 +15,28 @@
   /* box-sizing: border-box; */
 }
 
-.grey{
-    background-color: rgb(49, 49, 49);
-    color: rgb(241, 241, 241);
+.grey {
+  background-color: var(--trade_config_grey);
+  color: var(--foreground)
 }
 
-.strategy-config-label{
+.strategy-config-label {
   margin-left: 100px;
-    padding: 20px 0 20px 20px;
+  padding: 20px 0 20px 20px;
 }
 
-.strategy-config-input{
+.strategy-config-input {
   margin-right: 300px;
-    /* margin: 10px 300px 10px 0px; */
+  padding: 10px;
+  background-color: inherit;
+  border: 1px dashed #a1a1a1;
+  border-radius: 10px;
+  color: var(--foreground);
+  font-size: 15px;
 }
+
+.strategy-config-option {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+

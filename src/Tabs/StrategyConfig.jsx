@@ -38,8 +38,28 @@ function TradeConfig() {
         //         </div>
 
         <div className='strategy-config-form'>
+            <div className='strategy-config-field'
+
+            >
+                <label className='strategy-config-label'>
+                    Strategy
+                </label>
+                <select
+                    className='strategy-config-input'
+                    id="choose-strategy"
+                    value={selectedValue}
+                    onChange={handleTradingMode}
+                    required // Ensures a selection is made
+                    // style={{ marginRight: '700px' }}
+                >
+                    {/* <option value="" disabled>Select an option</option> Placeholder option */}
+                    <option className='strategy-config-option' value="Strategy_1">Strategy_1</option>
+                    <option className='strategy-config-option' value="Strategy_2">Strategy_2</option>
+                    <option className='strategy-config-option' value="Strategy_3">Strategy_3</option>
+                </select>
+            </div>
             <div className='strategy-config-field grey'
-                // style={{ marginTop: '100px' }}
+            // style={{ marginTop: '100px' }}
             >
                 <label className='strategy-config-label'>
                     Enable / Disable
@@ -51,9 +71,9 @@ function TradeConfig() {
                     onChange={handleTradingMode}
                     required // Ensures a selection is made
                 >
-                    <option value="" disabled>Select an option</option> {/* Placeholder option */}
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    {/* <option className='strategy-config-option' value="" disabled>Select an option</option> Placeholder option */}
+                    <option className='strategy-config-option' value="yes">Yes</option>
+                    <option className='strategy-config-option' value="no">No</option>
                 </select>
             </div>
             <div className='strategy-config-field'>
@@ -134,9 +154,9 @@ function TradeConfig() {
                     onChange={handleTradingMode}
                     required // Ensures a selection is made
                 >
-                    <option value="" disabled>Select an option</option> {/* Placeholder option */}
-                    <option value="live">Live</option>
-                    <option value="paper">Paper</option>
+                    {/* <option className='strategy-config-option' value="" disabled>Select an option</option> Placeholder option */}
+                    <option className='strategy-config-option' value="live">Live</option>
+                    <option className='strategy-config-option' value="paper">Paper</option>
                 </select>
             </div>
             <div className='strategy-config-field grey'>
