@@ -1,0 +1,13 @@
+.trading-history {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.trading-history-grid {
+  flex: 1;
+}
+
+.trading-history-footer {
+  height: 100px;
+}

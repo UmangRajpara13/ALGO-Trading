@@ -1,0 +1,58 @@
+{
+  "exchangeSegments": {
+    "NSECM": 1,
+    "NSEFO": 2,
+    "NSECD": 3,
+    "NSECO": 4,
+    "SLBM": 5,
+    "NIFSC": 7,
+    "BSECM": 11,
+    "BSEFO": 12,
+    "BSECD": 13,
+    "BSECO": 14,
+    "NCDEX": 21,
+    "MSECM": 41,
+    "MSEFO": 42,
+    "MSECD": 43,
+    "MCXFO": 51
+  },
+  "xtsMessageCode": {
+    "touchlineEvent": 1501,
+    "marketDepthEvent": 1502,
+    "indexDataEvent": 1504,
+    "candleDataEvent": 1505,
+    "openInterestEvent": 1510,
+    "instrumentPropertyChangeEvent": 1105,
+    "ltpEvent": 1512
+  },
+  "publishFormat": [
+    "Binary",
+    "JSON"
+  ],
+  "broadCastMode": [
+    "Full",
+    "Partial"
+  ],
+  "instrumentType": {
+    "1": "Futures",
+    "2": "Options",
+    "4": "Spread",
+    "8": "Equity",
+    "16": "Spot",
+    "32": "PreferenceShares",
+    "64": "Debentures",
+    "128": "Warrants",
+    "256": "Miscellaneous",
+    "512": "MutualFund",
+    "Futures": 1,
+    "Options": 2,
+    "Spread": 4,
+    "Equity": 8,
+    "Spot": 16,
+    "PreferenceShares": 32,
+    "Debentures": 64,
+    "Warrants": 128,
+    "Miscellaneous": 256,
+    "MutualFund": 512
+  }
+}

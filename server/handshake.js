@@ -14,7 +14,7 @@
 //     },
 //     // data:requestBody
 // };
-
+// backenzo
 // axios.post('https://developers.symphonyfintech.in/marketdata/auth/login', requestBody, config)
 //     .then((response) => {
 //         console.log(response); // Log the response data to the console
@@ -24,24 +24,12 @@
 //     });
 
 
-// import { XtsMarketDataAPI } from "xts-marketdata-api"
 
-// const xtsMarketDataAPI = new XtsMarketDataAPI('https://developers.symphonyfintech.in/marketdata');
-
-
-
-// var loginRequest = {
-//     secretKey: 'Tfxx773$xy',
-//     appKey: 'c90b846fbada3b7d4dc199',
-//     source: 'WebAPI'
-// };
-
-// let logIn = await xtsMarketDataAPI.logIn(loginRequest);
-// console.log(logIn)
 
 // let response = await xtsMarketDataAPI.clientConfig();
 
 // console.log(response);
+
 
 // fetch("https://developers.symphonyfintech.in/marketdata/auth/login", {
 //     method: "POST",
@@ -61,17 +49,17 @@
 
 
 
-fetch("https://developers.symphonyfintech.in/interactive/user/session", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        secretKey: 'Nmyj851$NC',
-        appKey: '5e4c1404c3e67838605909',
-        source: 'WebAPI'
-    })
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
+// fetch("https://developers.symphonyfintech.in/interactive/user/session", {
+//     method: "POST",
+//     headers: {
+//         "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//         secretKey: 'Nmyj851$NC',
+//         appKey: '5e4c1404c3e67838605909',
+//         source: 'WebAPI'
+//     })
+// })
+// .then(response => response.json())
+// .then(data => console.log(data))
+// .catch(error => console.error('Error:', error));
