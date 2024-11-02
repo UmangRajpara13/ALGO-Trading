@@ -1,28 +1,22 @@
 {
-  "name": "octopus-voa",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^6.6.0",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@reduxjs/toolkit": "^2.3.0",
-    "ag-grid-react": "^32.3.0",
-    "axios": "^1.7.7",
-    "express": "^4.21.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-redux": "^9.1.2",
-    "react-scripts": "0.9.5"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.2",
-    "esbuild": "0.24.0",
-    "nodemon": "^3.1.7",
-    "vite": "^5.4.9"
-  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "test": "react-scripts test --env=jsdom"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "socket.io-client": "^2.5.0",
+    "ws": "^8.18.0",
+    "xts-marketdata-api": "^3.0.10"
   }
 }

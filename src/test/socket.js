@@ -4,9 +4,10 @@ import { configDotenv } from "dotenv";
 configDotenv()
 
 
-var xtsMarketDataWS = new WS('https://mtrade.arhamshare.com/apimarketdata');
+var xtsMarketDataWS = new WS('https://mtrade.arhamshare.com/');
 
 var socketInitRequest = {
+
     token: process.env.token,
     userID: process.env.userID,
     publishFormat: "JSON",
