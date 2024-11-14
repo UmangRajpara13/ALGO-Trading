@@ -1,0 +1,12 @@
+
+
+>> initializing react-redux for a project
+- install react-redux
+- create a store
+- create a slice, register slice reducer to store
+
+>> setting up redux statefullness for a component
+
+create a slice
+register its reducer to store
+

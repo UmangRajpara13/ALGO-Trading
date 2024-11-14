@@ -1,0 +1,35 @@
+
+
+>> features
+
+1. Trading history
+-- it will be stored somewhere(say excel, )
+2. Live Positions
+
+
+
+first it should work for single user perfectly(i.e. complete trade management)
+then >Login feature< to accommodate multiple users 
+
+
+Scenarios
+- user interacts with webpage (needs token, ws(for live positions))
+- user testing a strategy locally (needs token, ws(remote address:port))
+- strategies are running autonomously on server(needs token, ws(local address:port))
+
+
+> technical
+Deploy to internet
+
+
+> subscription
+[
+{
+    index : "nsefo", instrument : "nifty5024dec24000pe"
+},
+{
+    index : "index", instrument : "nifty5024dec24000pe"
+},{
+    index : "ncecm", instrument : "tata"
+}
+]
