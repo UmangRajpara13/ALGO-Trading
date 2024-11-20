@@ -9,8 +9,18 @@ const xtsMarketDataAPI = new XtsMarketDataAPI("https://mtrade.arhamshare.com/api
 
 
 export async function Login(user) {
-    let logIn = await xtsMarketDataAPI.logIn(user);
-    // xtsMarketDataAPI.token=process.env.token
-    console.log(logIn);
-    updateOrAddEnvVariable("token", logIn.result.token)
+    return new Promise(async (resolve, reject) => {
+        let logIn = await xtsMarketDataAPI.logIn(user)
+        // console.log(logIn)
+        if (logIn["type"] === `success`) {
+            console.log('Login Successful!')
+            await updateOrAddEnvVariable("token", logIn.result.token)
+                .then(() => {
+                    resolve()
+                }).catch(() => {
+                    reject()
+                }) 
+        }
+    })
+
 }

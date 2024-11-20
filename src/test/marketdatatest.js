@@ -1,29 +1,21 @@
-import axios from 'axios';
 import socketIoClient from "socket.io-client"
 import { configDotenv } from "dotenv";
 configDotenv()
 
+
 const apiUrl = 'https://mtrade.arhamshare.com/';
-
-const loginRequest = {
-    secretKey: '',
-    appKey: '',
-    source: "WebAPI"
-};
-
 let publishFormat = 'JSON';
 let broadcastMode = 'Full';
+
+
 let eventCode = 1512;
-let Instruments = [
-    { exchangeSegment: 1, exchangeInstrumentID: 3456 },
-    { exchangeSegment: 1, exchangeInstrumentID: 26000 }
-];
+
 let token = '';
 let userId = '';
 let disconnectTimeout = 600000; // Time in milliseconds (e.g., 60000ms = 60 seconds)
 
 // Function to initialize the WebSocket connection
-const initializeWebSocket = (token, userId) => {
+const initializeWebSocket = () => {
     const wsUrl = apiUrl;
 
     const socket = socketIoClient(wsUrl, {
@@ -31,8 +23,8 @@ const initializeWebSocket = (token, userId) => {
         reconnectionDelayMax: 10000,
         reconnection: true,
         query: {
-            token: token,
-            userID: userId,
+            token: process.env.token,
+            userID: process.env.userID,
             publishFormat: publishFormat,
             broadcastMode: broadcastMode,
             transports: ["websocket"],
@@ -40,11 +32,11 @@ const initializeWebSocket = (token, userId) => {
         }
     });
 
-    console.log("Socket-->", socket);
-
+    // console.log("Socket-->",socket);
+    
 
     socket.on('connect', () => {
-        console.log('WebSocket Connected', Date.now());
+        console.log('WebSocket Connected',Date.now());
 
         // Schedule socket disconnect after the specified timeout
         setTimeout(() => {
@@ -66,7 +58,7 @@ const initializeWebSocket = (token, userId) => {
     });
 
     socket.on(`${eventCode}-json-full`, (data) => {
-        console.log('MarketDepth:', JSON.parse(data));
+        console.log('MarketDepth:', data);
     });
 
     socket.on(`${eventCode}-json-partial`, (data) => {
@@ -74,7 +66,7 @@ const initializeWebSocket = (token, userId) => {
     });
 
     socket.on('disconnect', () => {
-        console.log('WebSocket Disconnected', Date.now());
+        console.log('WebSocket Disconnected',Date.now());
     });
 
     return socket;
@@ -93,10 +85,7 @@ const main = async () => {
         // token = logInResponse.data.result.token;
         // userId = logInResponse.data.result.userID;
 
-        token = process.env.token;
-        userId = process.env.userID;
-
-        // Subscribe to Instruments
+        // // Subscribe to Instruments
         // const subResponse = await axios.post(`${apiUrl}/apimarketdata/instruments/subscription`, {
         //     instruments: Instruments,
         //     xtsMessageCode: eventCode,

@@ -1,14 +1,16 @@
 import axios from "axios";
 import { configDotenv } from "dotenv";
 import ExcelJS from "exceljs";
-import { existsSync } from "fs";
 configDotenv()
 
 const token = process.env.token;
 const apiUrl = 'https://mtrade.arhamshare.com';
 const isNumberRegex = /^-?\d*(\.\d+)?$/;
+const sanitizeString = (str) => str.replace(/\s+/g, '').toLowerCase();
 
 async function init_excelsheet(exchangeSegment, columns) {
+
+    console.log(`Fetching Master for ${exchangeSegment} Segment`)
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet(exchangeSegment);
@@ -145,9 +147,8 @@ const index_columns = [
 ];
 
 async function init_index(exchangeSegment, worksheet) {
-    // console.log('init')
-
     return new Promise((resolve, reject) => {
+        console.log(`Fetching Index ${exchangeSegment}`)
         axios.get(`${apiUrl}/apimarketdata/instruments/indexlist`, {
             params: {
                 'exchangeSegment': exchangeSegment
@@ -156,7 +157,7 @@ async function init_index(exchangeSegment, worksheet) {
                 'Content-Type': 'application/json'
             }
         }).then(async (response) => {
-            console.log(response.data)
+            // console.log(response.data)
             if (response.data["result"].indexList) {
                 for (let i = 0; i < response.data["result"].indexList.length; i++) {
                     const index = response.data["result"].indexList[i];
@@ -168,7 +169,6 @@ async function init_index(exchangeSegment, worksheet) {
                 }
             }
             resolve(worksheet)
-
         }).catch(error => {
             console.log(error)
             reject(error)
@@ -194,68 +194,78 @@ export async function master() {
     worksheet.views = [
         { state: 'frozen', xSplit: 0, ySplit: 1 }
     ];
-
+ 
     console.log(typeof worksheet)
 
     worksheet = await init_index(1, worksheet);
-    // console.log('hi')
     worksheet = await init_index(2, worksheet);
     worksheet = await init_index(3, worksheet);
     worksheet = await init_index(11, worksheet);
-
 
     await workbook.xlsx.writeFile(`index.xlsx`);
 
 }
 
-export async function GetInstrumentIds(instruments) {
+let nsecmWorksheet, nsefoWorksheet, nsecdWorksheet, indexWorksheet = null;
 
-    let instrumentObjectsList = []
+export async function masterRead(segment) {
+    const filePath = `${segment}.xlsx`
+    console.log(`Reading master list of ${segment}`)
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(filePath);
+    if (segment === `nsecm`) { nsecmWorksheet = workbook.getWorksheet(1) }
+    if (segment === `nsefo`) { nsefoWorksheet = workbook.getWorksheet(1) }
+    if (segment === `index`) { indexWorksheet = workbook.getWorksheet(1) }
+    if (segment === `nsecd`) { nsecdWorksheet = workbook.getWorksheet(1) }
+}
 
-    for (let i = 0; i < instruments.length; i++) {
+export async function GetInstrumentId(instrument) {
+    return new Promise(async (resolve, reject) => {
 
-        const instrument = instruments[i];
-        console.log(instrument)
-        const filePath = `./${instrument["segment"]}.xlsx`
         const searchKey = instrument.instrument
-        const valueColumn = 2; // Column A=1, B=2 
+        const valueColumn = 2; // Column A=1, B=2 ; 2 because all exchangeInstrumentId is in column 2
+        const eventCode = instrument.eventCode; // Column A=1, B=2 ; 2 because all exchangeInstrumentId is in column 2
+
+        let worksheet = null;
+
+        if (instrument.segment === `nsecm`) { worksheet = nsecmWorksheet }
+        if (instrument.segment === `nsefo`) { worksheet = nsefoWorksheet }
+        if (instrument.segment === `nsecd`) { worksheet = nsecdWorksheet }
+        if (instrument.segment === `index`) { worksheet = indexWorksheet }
+
+        let resultValue = null;
+        let exchangeSegment = null;
+        let keyColumn;
+
+        if (instrument.segment === 'index') {
+            if (instrument.instrument.startsWith('NIFTY')) {
+                exchangeSegment = 1;
+            }
+            else {
+                exchangeSegment = 11;
+            }
+            keyColumn = 3;
+        }
+        if (instrument.segment === 'nsecm') { exchangeSegment = 1; keyColumn = 4; }
+        if (instrument.segment === 'nsefo') { exchangeSegment = 2; keyColumn = 5; }
+        if (instrument.segment === 'nsecd') { exchangeSegment = 3; keyColumn = 4; }
 
         try {
-            const workbook = new ExcelJS.Workbook();
-            await workbook.xlsx.readFile(filePath);
-            const worksheet = workbook.getWorksheet(1);
-
-            let resultValue = null;
-            let exchangeSegment = null;
-            // { exchangeSegment: 1, exchangeInstrumentID: 3456 },
-
             worksheet.eachRow((row, rowNumber) => {
-                let keyColumn;
-                if (instrument.segment === 'index') {
-                    if (instrument.instrument.startsWith('NIFTY')) {
-                        exchangeSegment = 1;
-                    }
-                    else {
-                        exchangeSegment = 11;
-                    }
-                    keyColumn = 3;
-                }
-                if (instrument.segment === 'nsecm') { exchangeSegment = 1; keyColumn = 4; }
-                if (instrument.segment === 'nsefo') { exchangeSegment = 2; keyColumn = 5; }
-                if (instrument.segment === 'nsecd') { exchangeSegment = 3; keyColumn = 4; }
-
                 const keyCellValue = row.getCell(keyColumn).value; // Get value from the key column
-
-                if (keyCellValue === searchKey) {
+                if (sanitizeString(keyCellValue) === sanitizeString(searchKey)) {
                     resultValue = row.getCell(valueColumn).value; // Get value from the target column
-                    instrumentObjectsList.push({ exchangeSegment: exchangeSegment, exchangeInstrumentID: resultValue })
-                    // break;
+
+                    resolve({
+                        name: searchKey,
+                        exchangeSegment: exchangeSegment,
+                        exchangeInstrumentID: resultValue,
+                        eventCode: eventCode
+                    })
                 }
             });
         } catch (error) {
-            console.log(error)
+            reject(error)
         }
-
-    }
-    return instrumentObjectsList
+    })
 }
