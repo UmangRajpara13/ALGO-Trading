@@ -3,12 +3,16 @@
 >> features
 
 1. Trading history
--- it will be stored somewhere(say excel, )
 2. Live Positions
+3. Configuration of Strategies
+4. Deployed To Server
+5. unsubscribe
+6. messaging service to strategies
+7. order placed
 
 
 
-first it should work for single user perfectly(i.e. complete trade management)
+first it should work for single user perfectly (i.e. complete trade management)
 then >Login feature< to accommodate multiple users 
 
 
@@ -20,16 +24,3 @@ Scenarios
 
 > technical
 Deploy to internet
-
-
-> subscription
-[
-{
-    index : "nsefo", instrument : "nifty5024dec24000pe"
-},
-{
-    index : "index", instrument : "nifty5024dec24000pe"
-},{
-    index : "ncecm", instrument : "tata"
-}
-]

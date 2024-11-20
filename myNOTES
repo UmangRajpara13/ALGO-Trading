@@ -10,3 +10,35 @@
 create a slice
 register its reducer to store
 
+# MarketDepth: {
+#   MessageCode: 1512,
+#   MessageVersion: 4,
+#   ApplicationType: 0,
+#   TokenID: 0,
+#   ExchangeSegment: 1,
+#   ExchangeInstrumentID: 26001,
+#   BookType: 1,
+#   XMarketType: 1,
+#   LastTradedPrice: 50322.75,
+#   LastTradedQunatity: 0,
+#   LastUpdateTime: 1416391613,
+#   PercentChange: 0.29,
+#   Close: 50179.55
+# }
+
+# MarketDepth: {
+#   MessageCode: 1505,
+#   MessageVersion: 1,
+#   ApplicationType: 0,
+#   TokenID: 0,
+#   ExchangeSegment: 1,
+#   ExchangeInstrumentID: 26001,
+#   BarTime: 1731924899,
+#   BarVolume: 0,
+#   High: 50304.55,
+#   Low: 50256.9,
+#   Open: 50300.95,
+#   Close: 50256.9,
+#   OpenInterest: 0,
+#   SumOfQtyInToPrice: 0
+# }
