@@ -11,9 +11,15 @@
 7. order placed
 
 >> strategy
+3. Configuration of Strategies
+4. Deployed To Server
+5. unsubscribe
+6. messaging service to strategies
+7. order placed
 
 
 
+first it should work for single user perfectly (i.e. complete trade management)
 first it should work for single user perfectly (i.e. complete trade management)
 then >Login feature< to accommodate multiple users 
 
