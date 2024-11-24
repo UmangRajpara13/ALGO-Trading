@@ -17,7 +17,7 @@ register its reducer to store
 #   TokenID: 0,
 #   ExchangeSegment: 1,
 #   ExchangeInstrumentID: 26001,
-#   BookType: 1,
+#   BookType: 1, 
 #   XMarketType: 1,
 #   LastTradedPrice: 50322.75,
 #   LastTradedQunatity: 0,
@@ -42,3 +42,54 @@ register its reducer to store
 #   OpenInterest: 0,
 #   SumOfQtyInToPrice: 0
 # }
+
+  # {
+  #   MessageCode: 1502,
+  #   MessageVersion: 4,
+  #   ApplicationType: 0,
+  #   TokenID: 0,
+  #   ExchangeSegment: 1,
+  #   ExchangeInstrumentID: 26000,
+  #   ExchangeTimeStamp: 1416736258,
+  #   Bids: [ [Object], [Object], [Object], [Object], [Object] ],
+  #   Asks: [ [Object], [Object], [Object], [Object], [Object] ],
+  #   Touchline: {
+  #     BidInfo: [Object],
+  #     AskInfo: [Object],
+  #     LastTradedPrice: 23438.95,
+  #     LastTradedQunatity: 0,
+  #     TotalBuyQuantity: 0,
+  #     TotalSellQuantity: 0,
+  #     TotalTradedQuantity: 0,
+  #     AverageTradedPrice: 23438.95,
+  #     LastTradedTime: 1416736258,
+  #     LastUpdateTime: 1416736258,
+  #     PercentChange: 0.38,
+  #     Open: 23411.8,
+  #     High: 23541.1,
+  #     Low: 23359,
+  #     Close: 23349.9,
+  #     TotalValueTraded: null,
+  #     BuyBackTotalBuy: 0,
+  #     BuyBackTotalSell: 0
+  #   },
+  #   BookType: 1,
+  #   XMarketType: 1,
+  #   SequenceNumber: 1544215548618423,
+  #   name: 'NIFTY 50'
+  # }
+
+
+#   BIDS [
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 }
+# ] ASKS [
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 },
+#   { Size: 0, Price: 0, TotalOrders: 0, BuyBackMarketMaker: 0 }
+# ]

@@ -1,5 +1,4 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
-
 .~lock.*
 
 # dependencies
@@ -24,3 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+index.xlsx
+nsecd.xlsx
+nsecm.xlsx
+nsefo.xlsx

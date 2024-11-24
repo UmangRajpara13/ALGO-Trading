@@ -3,10 +3,85 @@ import { Subscribe, UnSubscribe } from "./market_functions.js";
 import { GetInstrumentId } from "./master.js";
 import socketIoClient from "socket.io-client"
 import { Mutex } from "async-mutex";
+import { dummy_missing_strikes_price, dummy_spot, dummy_strikes_price } from "./dummy_data.js";
+import { stringify } from "csv-stringify";
+import fs from 'fs';
+import { finished } from "stream/promises";
+
+let candle_log_stream,
+    marketdepth_log_stream = null;
+
+const handleExit = async () => {
+    // Close the writable streams when done
+    return new Promise(async (resolve, reject) => {
+        candle_log_stream && candle_log_stream.end((err) => {
+            if (err) {
+                console.log(`Error closing log stream: ${err}`);
+                reject()
+            } else {
+                console.log('candle_log_stream closed.');
+
+            }
+        });
+        marketdepth_log_stream && marketdepth_log_stream.end((err) => {
+            if (err) {
+                console.log(`Error closing log stream: ${err}`);
+                reject()
+            } else {
+                console.log('marketdepth_log_stream closed.');
+            }
+
+        });
+
+        // Wait for all writable streams to finish
+        if (marketdepth_log_stream && candle_log_stream) await Promise.all([
+            finished(candle_log_stream),
+            finished(marketdepth_log_stream)]);
+        resolve();
+    })
+}
+
+
+process.on('SIGINT', async () => {
+    console.log('Ctrl+C pressed.');
+    await handleExit();
+    process.exit(0); // Exit the process
+});
+
+process.on('uncaughtException', async (error) => {
+    console.error('Unhandled Exception:', error);
+    await handleExit();
+    process.exit(1); // Exiting is often recommended after an uncaught exception
+}); 
+
+process.on('SIGUSR2', async function () { 
+    // Perform cleanup tasks here
+    console.log('Cleaning up before nodemon restart...');
+
+    // Example: close database connections or clear caches
+    await handleExit();
+
+    // After cleanup, exit the process
+    process.kill(process.pid, 'SIGTERM');
+});
 
 const mutex = new Mutex();
 const clients = new Map();
 const InstrumentNameId = {}
+
+// Create a stringifier with headers
+const candle_stringifier = stringify({ header: true });
+const marketdepth_stringifier = stringify({ header: true });
+
+export function setup_log_streams(today) {
+    // Create a writable stream for logging
+    candle_log_stream = fs.createWriteStream(`./src/logs/${today}/candle.csv`, { flags: 'a', encoding: 'utf8' });
+    marketdepth_log_stream = fs.createWriteStream(`./src/logs/${today}/marketdepth.csv`, { flags: 'a', encoding: 'utf8' });
+
+    // Pipe the stringifier to the writable stream
+    candle_stringifier.pipe(candle_log_stream);
+    marketdepth_stringifier.pipe(marketdepth_log_stream);
+}
 
 export function ws_server_init(port) {
 
@@ -16,35 +91,45 @@ export function ws_server_init(port) {
 
     wss.on('connection', (ws) => {
 
+        if (process.env.NODE_ENV === 'development') {
+            console.log('sending dummy data...')
+            setTimeout(() => {
+                ws.send(JSON.stringify({ marketdata: dummy_spot }))
+            }, 2000);
+            setTimeout(() => {
+                ws.send(JSON.stringify({ marketdata: dummy_strikes_price }))
+            }, 3000);
+            setTimeout(() => {
+                ws.send(JSON.stringify({ marketdata: dummy_missing_strikes_price }))
+            }, 4000);
+        }
         // Handle incoming messages
         ws.on('message', async (message) => {
             const data = JSON.parse(message);
             const key = Object.keys(data)[0]
             const payload = data[key]
 
-            console.log(data, payload)
+            // console.log(data, payload)
 
             switch (key) {
                 case "clientId":
                     clients.set(payload["id"], { ws: ws })
                     break;
                 case "subscribe":
-                    // const instruments = await GetInstrumentIds(payload["list"])
-                    // console.log(instruments)
-                    console.log('subscribing')
+                    // console.log('subscribing')
                     payload["list"].forEach((instrument) => {
-                        console.log(instrument)
+                        // console.log(instrument)
                         GetInstrumentId(instrument).then((instrumentObjectFull) => {
                             // console.log('instrumentOjFull', instrumentObjectFull)
                             Subscribe(instrumentObjectFull).then((response) => {
-                                console.log('sub res', response)
-                                ws.send(JSON.stringify({ message: response }))
+                                console.log('subscribe', response.name, response.type)
+                                ws.send(JSON.stringify({ message: { ...response, operation: 'Subscribe' } }))
                                 InstrumentNameId[response.exchangeInstrumentID] = response.name
-                                console.log(InstrumentNameId)
-                            }).catch((error) => {
-                                console.log('sub err', error); ws.send(JSON.stringify({ message: error }))
+                                // console.log(InstrumentNameId)
+                            }).catch((errorObj) => {
+                                console.log('subscribe error', errorObj.name, errorObj.type)
+                                ws.send(JSON.stringify({ message: { ...errorObj, operation: 'Subscribe' } }))
                             })
-
                         })
                     })
 
@@ -52,16 +137,17 @@ export function ws_server_init(port) {
                 case "unsubscribe":
                     // UnSubscribe(payload["list"])
                     payload["list"].forEach((instrument) => {
-                        console.log(instrument)
+                        // console.log(instrument)
                         GetInstrumentId(instrument).then((instrumentObjectFull) => {
                             // console.log('instrumentOjFull', instrumentObjectFull)
                             UnSubscribe(instrumentObjectFull).then((response) => {
-                                console.log('unsub res', response)
-                                ws.send(JSON.stringify({ message: response }))
+                                console.log('Unsubscribe', response.name, response.type)
+                                ws.send(JSON.stringify({ message: { ...response, operation: 'Unsubscribe' } }))
                                 delete InstrumentNameId[response.exchangeInstrumentID]
-                                console.log(InstrumentNameId)
-                            }).catch((error) => {
-                                console.log('sub err', error); ws.send(JSON.stringify({ message: error }))
+                                // console.log(InstrumentNameId)
+                            }).catch((errorObj) => {
+                                console.log('subscribe error', errorObj.name, errorObj.type)
+                                ws.send(JSON.stringify({ message: { ...errorObj, operation: 'Subscribe' } }))
                             })
                         })
                     })
@@ -86,6 +172,7 @@ let broadcastMode = 'Full';
 let incomingMessages = [];
 let processingMessages = [];
 const PROCESSING_INTERVAL = 50; // milliseconds
+
 
 // Function to initialize the WebSocket connection
 export function initializeWebSocket(token, userID) {
@@ -114,16 +201,22 @@ export function initializeWebSocket(token, userID) {
     // });
 
     socket.on("1501-json-full", function (data) {
-        console.log("Touchline " + data);
+        // console.log("Touchline " + data);
     });
 
-    socket.on("1502-json-full", function (data) {
-        console.log("Market Depth" + data);
+    process.env.NODE_ENV != 'development' && socket.on("1502-json-full", function (data) {
+        // console.log("Market Depth" + data);
+
+        marketdepth_stringifier.write(JSON.parse(data));
+
+        incomingMessages.push(data); // Always add to incoming queue
     });
 
-    socket.on("1505-json-full", async function (data) {
-        const result = JSON.parse(data)
-        console.log(result.BarTime, ' ', InstrumentNameId[`${result["ExchangeInstrumentID"]}`], '  ', result.Close)
+    process.env.NODE_ENV != 'development' && socket.on("1505-json-full", async function (data) {
+
+        candle_stringifier.write(JSON.parse(data));
+        // const result = JSON.parse(data)
+        // console.log(result.BarTime, ' ', InstrumentNameId[`${result["ExchangeInstrumentID"]}`], '  ', result.Close)
         incomingMessages.push(data); // Always add to incoming queue
     });
 
@@ -135,7 +228,7 @@ export function initializeWebSocket(token, userID) {
         console.log("Open Interest" + data);
     });
 
-    socket.on("1512-json-full", function (data) {
+    process.env.NODE_ENV != 'development' && socket.on("1512-json-full", function (data) {
         // console.log("LTP" + data);
     });
 

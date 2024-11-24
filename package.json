@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js"
+    "start": "cross-env NODE_ENV=production node src/main.js",
+    "dev": "cross-env NODE_ENV=development nodemon src/main.js",
+    "prod": "cross-env NODE_ENV=production nodemon src/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,11 +16,15 @@
     "async-mutex": "^0.5.0",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
+    "csv-stringify": "^6.5.2",
     "dotenv": "^16.4.5",
     "exceljs": "^4.4.0",
     "express": "^4.21.1",
     "socket.io-client": "^2.5.0",
     "ws": "^8.18.0",
     "xts-marketdata-api": "^3.0.10"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

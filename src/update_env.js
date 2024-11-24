@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the path to your .env file
-const envFilePath = path.join(__dirname, '.env');
+const envFilePath = path.join('./.env');
 
 // Function to update or add a variable to the .env file
 function updateOrAddEnvVariable(key, value) {
