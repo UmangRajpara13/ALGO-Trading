@@ -9,7 +9,8 @@ import fs from 'fs';
 import { finished } from "stream/promises";
 
 let candle_log_stream,
-    marketdepth_log_stream = null;
+    marketdepth_log_stream,
+    sub_unsub_log_stream = null;
 
 const handleExit = async () => {
     // Close the writable streams when done
@@ -32,11 +33,22 @@ const handleExit = async () => {
             }
 
         });
+        sub_unsub_log_stream && sub_unsub_log_stream.end((err) => {
+            if (err) {
+                console.log(`Error closing log stream: ${err}`);
+                reject()
+            } else {
+                console.log('marketdepth_log_stream closed.');
+            }
+
+        });
 
         // Wait for all writable streams to finish
-        if (marketdepth_log_stream && candle_log_stream) await Promise.all([
+        if (marketdepth_log_stream && candle_log_stream && sub_unsub_logstream) await Promise.all([
             finished(candle_log_stream),
-            finished(marketdepth_log_stream)]);
+            finished(marketdepth_log_stream),
+            finished(sub_unsub_log_stream)
+        ]);
         resolve();
     })
 }
@@ -52,9 +64,9 @@ process.on('uncaughtException', async (error) => {
     console.error('Unhandled Exception:', error);
     await handleExit();
     process.exit(1); // Exiting is often recommended after an uncaught exception
-}); 
+});
 
-process.on('SIGUSR2', async function () { 
+process.on('SIGUSR2', async function () {
     // Perform cleanup tasks here
     console.log('Cleaning up before nodemon restart...');
 
@@ -72,15 +84,18 @@ const InstrumentNameId = {}
 // Create a stringifier with headers
 const candle_stringifier = stringify({ header: true });
 const marketdepth_stringifier = stringify({ header: true });
+const sub_unsub_stringifier = stringify({ header: true });
 
-export function setup_log_streams(today) {
+export function setup_market_log_streams(today) {
     // Create a writable stream for logging
     candle_log_stream = fs.createWriteStream(`./src/logs/${today}/candle.csv`, { flags: 'a', encoding: 'utf8' });
     marketdepth_log_stream = fs.createWriteStream(`./src/logs/${today}/marketdepth.csv`, { flags: 'a', encoding: 'utf8' });
+    sub_unsub_log_stream = fs.createWriteStream(`./src/logs/${today}/sub_unsub.csv`, { flags: 'a', encoding: 'utf8' });
 
     // Pipe the stringifier to the writable stream
     candle_stringifier.pipe(candle_log_stream);
     marketdepth_stringifier.pipe(marketdepth_log_stream);
+    sub_unsub_stringifier.pipe(sub_unsub_log_stream);
 }
 
 export function ws_server_init(port) {
@@ -123,11 +138,14 @@ export function ws_server_init(port) {
                             // console.log('instrumentOjFull', instrumentObjectFull)
                             Subscribe(instrumentObjectFull).then((response) => {
                                 console.log('subscribe', response.name, response.type)
+                                sub_unsub_stringifier.write({ ...response, operation: 'Subscribe', error: null });
+
                                 ws.send(JSON.stringify({ message: { ...response, operation: 'Subscribe' } }))
                                 InstrumentNameId[response.exchangeInstrumentID] = response.name
                                 // console.log(InstrumentNameId)
                             }).catch((errorObj) => {
-                                console.log('subscribe error', errorObj.name, errorObj.type)
+                                console.log('Subscribe error', errorObj.name, errorObj.type)
+                                sub_unsub_stringifier.write({ ...errorObj, operation: 'Subscribe' });
                                 ws.send(JSON.stringify({ message: { ...errorObj, operation: 'Subscribe' } }))
                             })
                         })
@@ -141,13 +159,16 @@ export function ws_server_init(port) {
                         GetInstrumentId(instrument).then((instrumentObjectFull) => {
                             // console.log('instrumentOjFull', instrumentObjectFull)
                             UnSubscribe(instrumentObjectFull).then((response) => {
-                                console.log('Unsubscribe', response.name, response.type)
+                                console.log('unsubscribe', response.name, response.type)
+                                sub_unsub_stringifier.write({ ...response, operation: 'Unsubscribe', error: null });
                                 ws.send(JSON.stringify({ message: { ...response, operation: 'Unsubscribe' } }))
                                 delete InstrumentNameId[response.exchangeInstrumentID]
                                 // console.log(InstrumentNameId)
                             }).catch((errorObj) => {
-                                console.log('subscribe error', errorObj.name, errorObj.type)
-                                ws.send(JSON.stringify({ message: { ...errorObj, operation: 'Subscribe' } }))
+                                console.log('Unsubscribe error', errorObj.name, errorObj.type)
+                                sub_unsub_stringifier.write({ ...errorObj, operation: 'Unsubscribe' });
+
+                                ws.send(JSON.stringify({ message: { ...errorObj, operation: 'Unsubscribe' } }))
                             })
                         })
                     })
@@ -207,15 +228,17 @@ export function initializeWebSocket(token, userID) {
     process.env.NODE_ENV != 'development' && socket.on("1502-json-full", function (data) {
         // console.log("Market Depth" + data);
 
-        marketdepth_stringifier.write(JSON.parse(data));
+        const result = JSON.parse(data)
+
+        marketdepth_stringifier.write({ ...result, name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`] });
 
         incomingMessages.push(data); // Always add to incoming queue
     });
 
     process.env.NODE_ENV != 'development' && socket.on("1505-json-full", async function (data) {
-
-        candle_stringifier.write(JSON.parse(data));
-        // const result = JSON.parse(data)
+        const result = JSON.parse(data)
+        
+        candle_stringifier.write({ ...result, name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`] });
         // console.log(result.BarTime, ' ', InstrumentNameId[`${result["ExchangeInstrumentID"]}`], '  ', result.Close)
         incomingMessages.push(data); // Always add to incoming queue
     });
