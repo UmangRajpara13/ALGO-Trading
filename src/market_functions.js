@@ -23,36 +23,12 @@ export async function Subscribe(subObj) {
                 resolve({ ...subObj, type: 'success' }); // Resolve with data
         }).catch(error => {
             // console.log('axios error', error)
-            reject({ error: error }); // Resolve with data
-        });
-    })
-
-}
-
-export async function UnSubscribe(unsubObj) {
-    // Subscribe to Instruments
-    return new Promise(async (resolve, reject) => {
-        const subResponse = await axios.put(`${apiUrl}/apimarketdata/instruments/subscription`, {
-            instruments: [{
-                exchangeSegment: unsubObj.exchangeSegment,
-                exchangeInstrumentID: unsubObj.exchangeInstrumentID
-            }],
-            xtsMessageCode: unsubObj.eventCode,
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': process.env.token
-            }
-        }).then(response => {
-            console.log('axios unsub res', response.data)
-            if (response.data.type === 'success')
-                resolve(unsubObj); // Resolve with data
-        }).catch(error => {
-            // console.log('axios error', error)
             reject({ error: error, ...subObj, type: 'failed' }); // Resolve with data
         });
     })
+
 }
+
 
 export async function UnSubscribe(unsubObj) {
     // Subscribe to Instruments

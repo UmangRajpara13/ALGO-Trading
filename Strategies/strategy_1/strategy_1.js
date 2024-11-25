@@ -169,34 +169,29 @@ const handleExit = async () => {
                 const candleHour = new Date(key * 1000).getUTCHours()
                 const candleMinute = new Date(key * 1000).getUTCMinutes()
 
-                const jodi = [value.row.n_m_250_CE + value.row.n_m_250_PE, value.row.n_m_200_CE + value.row.n_m_200_PE,
-                value.row.n_m_150_CE + value.row.n_m_150_PE, value.row.n_m_100_CE + value.row.n_m_100_PE, value.row.n_m_50_CE + value.row.n_m_50_PE,
-                value.row.n_p_50_CE + value.row.n_p_50_PE, value.row.n_p_100_CE + value.row.n_p_100_PE, value.row.n_p_150_CE + value.row.n_p_150_PE,
-                value.row.n_p_200_CE + value.row.n_p_200_PE, value.row.n_p_250_CE + value.row.n_p_250_PE, value.row.n_nf_CE + value.row.n_nf_PE
-                ]
-                const row = {
-                    time: `${candleHour}:${candleMinute}`,
-                    ...value.row
-                }
-
-                if (value.type == 'strikes') {
+                if (value.showStrikes) {
                     worksheet.addRow({
-                        ...row,
-                        n_m_250_CE_PE: value.row.n_m_250_CE,
-                        n_m_200_CE_PE: value.row.n_m_200_CE,
-                        n_m_150_CE_PE: value.row.n_m_150_CE,
-                        n_m_100_CE_PE: value.row.n_m_100_CE,
-                        n_m_50_CE_PE: value.row.n_m_50_CE,
+                        time: `${candleHour}:${candleMinute}`,
+
+                        nifty_50_spot: value.nifty_50_spot,
+
+                        ...value.strikes,
+
+                        n_m_250_CE_PE: value.strikes.n_m_250_CE,
+                        n_m_200_CE_PE: value.strikes.n_m_200_CE,
+                        n_m_150_CE_PE: value.strikes.n_m_150_CE,
+                        n_m_100_CE_PE: value.strikes.n_m_100_CE,
+                        n_m_50_CE_PE: value.strikes.n_m_50_CE,
 
                         n_lowest: null,
 
-                        n_p_50_CE_PE: value.row.n_p_50_CE,
-                        n_p_100_CE_PE: value.row.n_p_100_CE,
-                        n_p_150_CE_PE: value.row.n_p_150_CE,
-                        n_p_200_CE_PE: value.row.n_p_200_CE,
-                        n_p_250_CE_PE: value.row.n_p_250_CE,
+                        n_p_50_CE_PE: value.strikes.n_p_50_CE,
+                        n_p_100_CE_PE: value.strikes.n_p_100_CE,
+                        n_p_150_CE_PE: value.strikes.n_p_150_CE,
+                        n_p_200_CE_PE: value.strikes.n_p_200_CE,
+                        n_p_250_CE_PE: value.strikes.n_p_250_CE,
 
-                        n_nf_CE_PE: value.row.n_nf_CE,
+                        n_nf_CE_PE: value.strikes.n_nf_CE,
 
                     }).eachCell((cell) => {
                         cell.style.fill = {
@@ -205,9 +200,20 @@ const handleExit = async () => {
                             fgColor: { argb: 'FFFF00' } // Yellow background for every 50th row
                         };
                     })
-                } else if (value.type == 'prices') {
+                } else {
+
+                    const jodi = [value.row.n_m_250_CE + value.row.n_m_250_PE, value.row.n_m_200_CE + value.row.n_m_200_PE,
+                    value.row.n_m_150_CE + value.row.n_m_150_PE, value.row.n_m_100_CE + value.row.n_m_100_PE, value.row.n_m_50_CE + value.row.n_m_50_PE,
+                    value.row.n_p_50_CE + value.row.n_p_50_PE, value.row.n_p_100_CE + value.row.n_p_100_PE, value.row.n_p_150_CE + value.row.n_p_150_PE,
+                    value.row.n_p_200_CE + value.row.n_p_200_PE, value.row.n_p_250_CE + value.row.n_p_250_PE, value.row.n_nf_CE + value.row.n_nf_PE
+                    ]
                     worksheet.addRow({
-                        ...row,
+                        time: `${candleHour}:${candleMinute}`,
+
+                        nifty_50_spot: value.nifty_50_spot,
+
+                        ...value.row,
+
                         n_m_250_CE_PE: jodi[0],
                         n_m_200_CE_PE: jodi[1],
                         n_m_150_CE_PE: jodi[2],
@@ -235,34 +241,29 @@ const handleExit = async () => {
                 const candleHour = new Date(key * 1000).getUTCHours()
                 const candleMinute = new Date(key * 1000).getUTCMinutes()
 
-                const jodi = [value.row.nb_m_500_CE + value.row.nb_m_500_PE, value.row.nb_m_400_CE + value.row.nb_m_400_PE,
-                value.row.nb_m_300_CE + value.row.nb_m_300_PE, value.row.nb_m_200_CE + value.row.nb_m_200_PE, value.row.nb_m_100_CE + value.row.nb_m_100_PE,
-                value.row.nb_p_100_CE + value.row.nb_p_100_PE, value.row.nb_p_200_CE + value.row.nb_p_200_PE, value.row.nb_p_300_CE + value.row.nb_p_300_PE,
-                value.row.nb_p_400_CE + value.row.nb_p_400_PE, value.row.nb_p_500_CE + value.row.nb_p_500_PE, value.row.nb_nf_CE + value.row.nb_nf_PE
-                ]
-                const row = {
-                    time: `${candleHour}:${candleMinute}`,
-                    ...value.row
-                }
-
-                if (value.type == 'strikes') {
+                if (value.strikes) {
                     worksheet_bank.addRow({
-                        ...row,
-                        nb_m_500_CE_PE: value.row.nb_m_500_CE,
-                        nb_m_400_CE_PE: value.row.nb_m_400_CE,
-                        nb_m_300_CE_PE: value.row.nb_m_300_CE,
-                        nb_m_200_CE_PE: value.row.nb_m_200_CE,
-                        nb_m_100_CE_PE: value.row.nb_m_100_CE,
+                        time: `${candleHour}:${candleMinute}`,
+
+                        nifty_bank_spot: value.nifty_bank_spot,
+
+                        ...value.strikes,
+
+                        nb_m_500_CE_PE: value.strikes.nb_m_500_CE,
+                        nb_m_400_CE_PE: value.strikes.nb_m_400_CE,
+                        nb_m_300_CE_PE: value.strikes.nb_m_300_CE,
+                        nb_m_200_CE_PE: value.strikes.nb_m_200_CE,
+                        nb_m_100_CE_PE: value.strikes.nb_m_100_CE,
 
                         nb_lowest: null,
 
-                        nb_p_100_CE_PE: value.row.nb_p_100_CE,
-                        nb_p_200_CE_PE: value.row.nb_p_200_CE,
-                        nb_p_300_CE_PE: value.row.nb_p_300_CE,
-                        nb_p_400_CE_PE: value.row.nb_p_400_CE,
-                        nb_p_500_CE_PE: value.row.nb_p_500_CE,
+                        nb_p_100_CE_PE: value.strikes.nb_p_100_CE,
+                        nb_p_200_CE_PE: value.strikes.nb_p_200_CE,
+                        nb_p_300_CE_PE: value.strikes.nb_p_300_CE,
+                        nb_p_400_CE_PE: value.strikes.nb_p_400_CE,
+                        nb_p_500_CE_PE: value.strikes.nb_p_500_CE,
 
-                        nb_nf_CE_PE: value.row.nb_nf_CE,
+                        nb_nf_CE_PE: value.strikes.nb_nf_CE,
 
                     }).eachCell((cell) => {
                         cell.style.fill = {
@@ -271,9 +272,20 @@ const handleExit = async () => {
                             fgColor: { argb: 'FFFF00' } // Yellow background for every 50th row
                         };
                     })
-                } else if (value.type == 'prices') {
+                } else {
+                    const jodi = [value.row.nb_m_500_CE + value.row.nb_m_500_PE, value.row.nb_m_400_CE + value.row.nb_m_400_PE,
+                    value.row.nb_m_300_CE + value.row.nb_m_300_PE, value.row.nb_m_200_CE + value.row.nb_m_200_PE, value.row.nb_m_100_CE + value.row.nb_m_100_PE,
+                    value.row.nb_p_100_CE + value.row.nb_p_100_PE, value.row.nb_p_200_CE + value.row.nb_p_200_PE, value.row.nb_p_300_CE + value.row.nb_p_300_PE,
+                    value.row.nb_p_400_CE + value.row.nb_p_400_PE, value.row.nb_p_500_CE + value.row.nb_p_500_PE, value.row.nb_nf_CE + value.row.nb_nf_PE
+                    ]
+
                     worksheet_bank.addRow({
-                        ...row,
+                        time: `${candleHour}:${candleMinute}`,
+
+                        nifty_bank_spot: value.nifty_bank_spot,
+
+                        ...value.row,
+
                         nb_m_500_CE_PE: jodi[0],
                         nb_m_400_CE_PE: jodi[1],
                         nb_m_300_CE_PE: jodi[2],
@@ -344,7 +356,6 @@ process.on('uncaughtException', async (error) => {
     process.exit(1); // Exiting is often recommended after an uncaught exception
 });
 
-
 socket.onopen = () => {
     console.log("Connected to server");
     socket.send(
@@ -390,10 +401,10 @@ socket.onopen = () => {
 
 let nearest_future = null;
 let nearest_future_bank = null;
-let strikeList = [];
-let strikeListNiftyBank = [];
-let strike_price;
-let strike_price_bank;
+let nifty_50_strike_list = [];
+let nifty_bank_strike_list = [];
+let nifty_50_strike_price;
+let nifty_bank_strike_price;
 
 
 // Create a stringifier with headers
@@ -427,13 +438,11 @@ socket.onmessage = (event) => {
                 if (data.MessageCode === 1505 & data.name === "NIFTY 50") {
                     console.log(data.BarTime, ' ', `${candleHour}:${candleMinute}`, ' ', data.name, '  ', data.Close, ' ')
 
-                    const key = `nifty_50_spot`
                     bigObject = {
                         ...bigObject,
                         [data.BarTime]: {
-                            row: {
-                                [key]: data.Close
-                            }
+                            ...bigObject[data.BarTime],
+                            [`nifty_50_spot`]: data.Close
                         }
                     }
 
@@ -447,12 +456,21 @@ socket.onmessage = (event) => {
 
                         console.log('NIFTY 50:Initializing Future or Future Changed! ', `nf:${nearest_future}`)
 
+                        bigObject = {
+                            ...bigObject,
+                            [data.BarTime]: {
+                                ...bigObject[data.BarTime],
+                                strikes: {},
+                                showStrikes: true
+                            }
+                        }
+
                         // Unsubscribing +5,1,-5 CE/PE contracts
-                        if (strikeList.length != 0) {
+                        if (nifty_50_strike_list.length != 0) {
 
                             for (let j = 0; j < types.length; j++) {
 
-                                strike_price = 250
+                                nifty_50_strike_price = 250
 
                                 for (let i = 0; i < 11; i++) {
                                     // console.log('unsubscribing')
@@ -462,42 +480,42 @@ socket.onmessage = (event) => {
                                                 id: "strategy_1",
                                                 list: [
                                                     {
-                                                        segment: "nsefo", instrument: `NIFTY24NOV${nearest_future + strike_price}${types[j]}`, eventCode: 1505
+                                                        segment: "nsefo", instrument: `NIFTY24NOV${nearest_future + nifty_50_strike_price}${types[j]}`, eventCode: 1505
                                                     },
                                                 ]
                                             }
                                         })
                                     )
-                                    strike_price -= 50;
+                                    nifty_50_strike_price -= 50;
                                 }
                             }
-                            strikeList = []
+                            nifty_50_strike_list = []
                         }
 
                         // subscribing +5,1,-5 CE/PE contracts
                         for (let j = 0; j < types.length; j++) {
 
-                            strike_price = 250
+                            nifty_50_strike_price = 250
 
                             for (let i = 0; i < 11; i++) {
-                                strikeList.push(`NIFTY24NOV${nearest_future + strike_price}${types[j]}`)
+                                nifty_50_strike_list.push(`NIFTY24NOV${nearest_future + nifty_50_strike_price}${types[j]}`)
 
-                                if (strike_price > 0) {
-                                    bigObject[data.BarTime].row = {
-                                        ...bigObject[data.BarTime]?.row,
-                                        [`n_p_${strike_price}_${types[j]}`]: nearest_future + strike_price
+                                if (nifty_50_strike_price > 0) {
+                                    bigObject[data.BarTime].strikes = {
+                                        ...bigObject[data.BarTime]?.strikes,
+                                        [`n_p_${nifty_50_strike_price}_${types[j]}`]: nearest_future + nifty_50_strike_price
                                     }
                                 }
-                                if (strike_price < 0) {
-                                    bigObject[data.BarTime].row = {
-                                        ...bigObject[data.BarTime]?.row,
-                                        [`n_m_${Math.abs(strike_price)}_${types[j]}`]: nearest_future + strike_price
+                                if (nifty_50_strike_price < 0) {
+                                    bigObject[data.BarTime].strikes = {
+                                        ...bigObject[data.BarTime]?.strikes,
+                                        [`n_m_${Math.abs(nifty_50_strike_price)}_${types[j]}`]: nearest_future + nifty_50_strike_price
                                     }
                                 }
-                                if (strike_price == 0) {
-                                    bigObject[data.BarTime].row = {
-                                        ...bigObject[data.BarTime]?.row,
-                                        [`n_nf_${types[j]}`]: nearest_future + strike_price
+                                if (nifty_50_strike_price == 0) {
+                                    bigObject[data.BarTime].strikes = {
+                                        ...bigObject[data.BarTime]?.strikes,
+                                        [`n_nf_${types[j]}`]: nearest_future + nifty_50_strike_price
                                     }
                                 }
 
@@ -507,26 +525,19 @@ socket.onmessage = (event) => {
                                             id: "strategy_1",
                                             list: [
                                                 {
-                                                    segment: "nsefo", instrument: `NIFTY24NOV${nearest_future + strike_price}${types[j]}`, eventCode: 1505
+                                                    segment: "nsefo", instrument: `NIFTY24NOV${nearest_future + nifty_50_strike_price}${types[j]}`, eventCode: 1505
                                                 },
                                             ]
                                         }
                                     })
                                 )
-                                strike_price -= 50;
-                            }
-                        }
-                        bigObject = {
-                            ...bigObject,
-                            [data.BarTime]: {
-                                ...bigObject[data.BarTime],
-                                type: 'strikes'
+                                nifty_50_strike_price -= 50;
                             }
                         }
                     }
                 }
 
-                if (data.MessageCode === 1505 & strikeList.includes(data.name)) {
+                if (data.MessageCode === 1505 & nifty_50_strike_list.includes(data.name)) {
 
                     console.log(data.BarTime, ' ', `${candleHour}:${candleMinute}`, ' ', data.name, '  ', data.Close, ' ')
 
@@ -557,14 +568,8 @@ socket.onmessage = (event) => {
                             [`n_nf_${contractType}`]: data.Close
                         }
                     }
-                    bigObject = {
-                        ...bigObject,
-                        [data.BarTime]: {
-                            ...bigObject[data.BarTime],
-                            type: 'prices'
-                        }
-                    }
                 }
+
                 if (data.MessageCode === 1505 & data.name === "NIFTY BANK") {
 
                     console.log(data.BarTime, ' ', `${candleHour}:${candleMinute}`, ' ', data.name, '  ', data.Close, ' ')
@@ -574,13 +579,11 @@ socket.onmessage = (event) => {
 
                     // console.log(data.BarTime, ' ', `${candleHour}:${candleMinute}`, ' ', data.name, '  ', data.Close, ' ')
 
-                    const key = `nifty_bank_spot`
                     NB_Big_Object = {
                         ...NB_Big_Object,
                         [data.BarTime]: {
-                            row: {
-                                [key]: data.Close
-                            }
+                            ...NB_Big_Object[data.BarTime],
+                            [`nifty_bank_spot`]: data.Close
                         }
                     }
 
@@ -594,11 +597,20 @@ socket.onmessage = (event) => {
 
                         console.log('NIFTY BANK :Initializing Future or Future Changed! ', `nf_bank:${nearest_future_bank}`)
 
+                        NB_Big_Object = {
+                            ...NB_Big_Object,
+                            [data.BarTime]: {
+                                ...NB_Big_Object[data.BarTime],
+                                strikes: {},
+                                showStrikes: true
+                            }
+                        }
+
                         // Unsubscribing +5,1,-5 CE/PE contracts
-                        if (strikeListNiftyBank.length != 0) {
+                        if (nifty_bank_strike_list.length != 0) {
                             for (let j = 0; j < types.length; j++) {
 
-                                strike_price_bank = 500
+                                nifty_bank_strike_price = 500
 
                                 for (let i = 0; i < 11; i++) {
                                     // console.log('unsubscribing')
@@ -608,44 +620,44 @@ socket.onmessage = (event) => {
                                                 id: "strategy_1",
                                                 list: [
                                                     {
-                                                        segment: "nsefo", instrument: `BANKNIFTY24NOV${nearest_future_bank + strike_price_bank}${types[j]}`, eventCode: 1505
+                                                        segment: "nsefo", instrument: `BANKNIFTY24NOV${nearest_future_bank + nifty_bank_strike_price}${types[j]}`, eventCode: 1505
                                                     },
                                                 ]
                                             }
                                         })
                                     )
-                                    strike_price_bank -= 100;
+                                    nifty_bank_strike_price -= 100;
                                 }
                             }
-                            strikeListNiftyBank = []
+                            nifty_bank_strike_list = []
                         }
 
                         // subscribing +5,1,-5 CE/PE contracts
                         for (let j = 0; j < types.length; j++) {
 
-                            strike_price_bank = 500
+                            nifty_bank_strike_price = 500
 
                             for (let i = 0; i < 11; i++) {
-                                strikeListNiftyBank.push(`BANKNIFTY24NOV${nearest_future_bank + strike_price_bank}${types[j]}`)
-                                if (strike_price_bank > 0) {
-                                    NB_Big_Object[data.BarTime].row = {
-                                        ...NB_Big_Object[data.BarTime]?.row,
-                                        [`nb_p_${strike_price_bank}_${types[j]}`]: nearest_future_bank + strike_price_bank
+                                nifty_bank_strike_list.push(`BANKNIFTY24NOV${nearest_future_bank + nifty_bank_strike_price}${types[j]}`)
+                                if (nifty_bank_strike_price > 0) {
+                                    NB_Big_Object[data.BarTime].strikes = {
+                                        ...NB_Big_Object[data.BarTime]?.strikes,
+                                        [`nb_p_${nifty_bank_strike_price}_${types[j]}`]: nearest_future_bank + nifty_bank_strike_price
                                     }
                                 }
-                                if (strike_price_bank < 0) {
-                                    NB_Big_Object[data.BarTime].row = {
-                                        ...NB_Big_Object[data.BarTime]?.row,
-                                        [`nb_m_${Math.abs(strike_price_bank)}_${types[j]}`]: nearest_future_bank + strike_price_bank
+                                if (nifty_bank_strike_price < 0) {
+                                    NB_Big_Object[data.BarTime].strikes = {
+                                        ...NB_Big_Object[data.BarTime]?.strikes,
+                                        [`nb_m_${Math.abs(nifty_bank_strike_price)}_${types[j]}`]: nearest_future_bank + nifty_bank_strike_price
                                     }
                                 }
-                                if (strike_price_bank == 0) {
-                                    NB_Big_Object[data.BarTime].row = {
-                                        ...NB_Big_Object[data.BarTime]?.row,
-                                        [`nb_nf_${types[j]}`]: nearest_future_bank + strike_price_bank
+                                if (nifty_bank_strike_price == 0) {
+                                    NB_Big_Object[data.BarTime].strikes = {
+                                        ...NB_Big_Object[data.BarTime]?.strikes,
+                                        [`nb_nf_${types[j]}`]: nearest_future_bank + nifty_bank_strike_price
                                     }
                                 }
-                                // console.log(`subscribing   BANKNIFTY24NOV${nearest_future_bank + strike_price_bank}${types[j]}`)
+                                // console.log(`subscribing   BANKNIFTY24NOV${nearest_future_bank + nifty_bank_strike_price}${types[j]}`)
 
                                 socket.send(
                                     JSON.stringify({
@@ -653,26 +665,19 @@ socket.onmessage = (event) => {
                                             id: "strategy_1",
                                             list: [
                                                 {
-                                                    segment: "nsefo", instrument: `BANKNIFTY24NOV${nearest_future_bank + strike_price_bank}${types[j]}`, eventCode: 1505
+                                                    segment: "nsefo", instrument: `BANKNIFTY24NOV${nearest_future_bank + nifty_bank_strike_price}${types[j]}`, eventCode: 1505
                                                 },
                                             ]
                                         }
                                     })
                                 )
-                                strike_price_bank -= 100;
-                            }
-                        }
-                        NB_Big_Object = {
-                            ...NB_Big_Object,
-                            [data.BarTime]: {
-                                ...NB_Big_Object[data.BarTime],
-                                type: 'strikes'
+                                nifty_bank_strike_price -= 100;
                             }
                         }
                     }
                 }
 
-                if (data.MessageCode === 1505 & strikeListNiftyBank.includes(data.name)) {
+                if (data.MessageCode === 1505 & nifty_bank_strike_list.includes(data.name)) {
                     console.log(data.BarTime, ' ', `${candleHour}:${candleMinute}`, ' ', data.name, '  ', data.Close, ' ')
 
                     const contractPrice = Number(data.name.match(/NOV(\d+)(PE|CE)/)[1])
@@ -700,14 +705,8 @@ socket.onmessage = (event) => {
                             [`nb_nf_${contractType}`]: data.Close
                         }
                     }
-                    NB_Big_Object = {
-                        ...NB_Big_Object,
-                        [data.BarTime]: {
-                            ...NB_Big_Object[data.BarTime],
-                            type: 'prices'
-                        }
-                    }
                 }
+
                 if (data.MessageCode === 1502) {
                     // console.log('BIDS',data.Bids,'ASKS', data.Asks)
                 }
