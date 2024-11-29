@@ -3,56 +3,68 @@ import { Subscribe, UnSubscribe } from "./market_functions.js";
 import { GetInstrumentId } from "./master.js";
 import socketIoClient from "socket.io-client"
 import { Mutex } from "async-mutex";
-import { dummy_missing_strikes_price, dummy_spot, dummy_strikes_price } from "./dummy_data.js";
+import { dummy_missing_strikes_price, dummy_nearest_future_change, dummy_spot, dummy_spot_nearest_future_change, dummy_strikes_price } from "./dummy_data.js";
 import { stringify } from "csv-stringify";
 import fs from 'fs';
 import { finished } from "stream/promises";
 
 let candle_log_stream,
+    ltp_log_stream,
     marketdepth_log_stream,
     sub_unsub_log_stream = null;
 
+const mutex = new Mutex();
+const clients = new Map();
+const InstrumentNameId = {}
+
+// Create a stringifier with headers
+const candle_stringifier = stringify({ header: true });
+const ltp_stringifier = stringify({ header: true });
+const marketdepth_stringifier = stringify({ header: true });
+const sub_unsub_stringifier = stringify({ header: true });
+
+  
 const handleExit = async () => {
     // Close the writable streams when done
-    return new Promise(async (resolve, reject) => {
-        candle_log_stream && candle_log_stream.end((err) => {
-            if (err) {
-                console.log(`Error closing log stream: ${err}`);
-                reject()
-            } else {
-                console.log('candle_log_stream closed.');
+    try {
+        if (!candle_log_stream || !marketdepth_log_stream || !sub_unsub_log_stream || !ltp_log_stream) {
+            console.error("One or more log streams are not defined.");
+            return; // Exit early if any stream is undefined
+        }
+        const closeStream = (stream) => {
+            return new Promise((resolve, reject) => {
+                stream.end((err) => {
+                    if (err) {
+                        console.log(`Error closing log stream: ${err}`);
+                        reject(err);
+                    } else {
+                        console.log(`${stream.name} closed.`);
+                        resolve();
+                    }
+                });
+            });
+        };
 
-            }
-        });
-        marketdepth_log_stream && marketdepth_log_stream.end((err) => {
-            if (err) {
-                console.log(`Error closing log stream: ${err}`);
-                reject()
-            } else {
-                console.log('marketdepth_log_stream closed.');
-            }
-
-        });
-        sub_unsub_log_stream && sub_unsub_log_stream.end((err) => {
-            if (err) {
-                console.log(`Error closing log stream: ${err}`);
-                reject()
-            } else {
-                console.log('marketdepth_log_stream closed.');
-            }
-
-        });
+        await Promise.all([
+            closeStream(candle_log_stream),
+            closeStream(marketdepth_log_stream),
+            closeStream(sub_unsub_log_stream),
+            closeStream(ltp_log_stream)
+        ]);
 
         // Wait for all writable streams to finish
-        if (marketdepth_log_stream && candle_log_stream && sub_unsub_logstream) await Promise.all([
+        // Check if all streams have finished
+        await Promise.all([
             finished(candle_log_stream),
             finished(marketdepth_log_stream),
-            finished(sub_unsub_log_stream)
+            finished(sub_unsub_log_stream),
+            finished(ltp_log_stream)
         ]);
-        resolve();
-    })
-}
+    } catch (error) {
+        console.log(error)
+    }
 
+}
 
 process.on('SIGINT', async () => {
     console.log('Ctrl+C pressed.');
@@ -77,25 +89,19 @@ process.on('SIGUSR2', async function () {
     process.kill(process.pid, 'SIGTERM');
 });
 
-const mutex = new Mutex();
-const clients = new Map();
-const InstrumentNameId = {}
-
-// Create a stringifier with headers
-const candle_stringifier = stringify({ header: true });
-const marketdepth_stringifier = stringify({ header: true });
-const sub_unsub_stringifier = stringify({ header: true });
-
 export function setup_market_log_streams(today) {
     // Create a writable stream for logging
     candle_log_stream = fs.createWriteStream(`./src/logs/${today}/candle.csv`, { flags: 'a', encoding: 'utf8' });
     marketdepth_log_stream = fs.createWriteStream(`./src/logs/${today}/marketdepth.csv`, { flags: 'a', encoding: 'utf8' });
     sub_unsub_log_stream = fs.createWriteStream(`./src/logs/${today}/sub_unsub.csv`, { flags: 'a', encoding: 'utf8' });
+    ltp_log_stream = fs.createWriteStream(`./src/logs/${today}/ltp.csv`, { flags: 'a', encoding: 'utf8' });
 
     // Pipe the stringifier to the writable stream
     candle_stringifier.pipe(candle_log_stream);
     marketdepth_stringifier.pipe(marketdepth_log_stream);
     sub_unsub_stringifier.pipe(sub_unsub_log_stream);
+    ltp_stringifier.pipe(ltp_log_stream);
+
 }
 
 export function ws_server_init(port) {
@@ -110,13 +116,19 @@ export function ws_server_init(port) {
             console.log('sending dummy data...')
             setTimeout(() => {
                 ws.send(JSON.stringify({ marketdata: dummy_spot }))
-            }, 2000);
+            }, 9990);
             setTimeout(() => {
                 ws.send(JSON.stringify({ marketdata: dummy_strikes_price }))
-            }, 3000);
+            }, 14990);
             setTimeout(() => {
                 ws.send(JSON.stringify({ marketdata: dummy_missing_strikes_price }))
-            }, 4000);
+            }, 19990);
+            setTimeout(() => {
+                ws.send(JSON.stringify({ marketdata: dummy_spot_nearest_future_change }))
+            }, 24990);
+            setTimeout(() => {
+                ws.send(JSON.stringify({ marketdata: dummy_nearest_future_change }))
+            }, 29990);
         }
         // Handle incoming messages
         ws.on('message', async (message) => {
@@ -139,7 +151,6 @@ export function ws_server_init(port) {
                             Subscribe(instrumentObjectFull).then((response) => {
                                 console.log('subscribe', response.name, response.type)
                                 sub_unsub_stringifier.write({ ...response, operation: 'Subscribe', error: null });
-
                                 ws.send(JSON.stringify({ message: { ...response, operation: 'Subscribe' } }))
                                 InstrumentNameId[response.exchangeInstrumentID] = response.name
                                 // console.log(InstrumentNameId)
@@ -232,15 +243,24 @@ export function initializeWebSocket(token, userID) {
 
         marketdepth_stringifier.write({ ...result, name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`] });
 
-        incomingMessages.push(data); // Always add to incoming queue
+        // incomingMessages.push(data); // Always add to incoming queue
     });
 
     process.env.NODE_ENV != 'development' && socket.on("1505-json-full", async function (data) {
         const result = JSON.parse(data)
-        
+
         candle_stringifier.write({ ...result, name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`] });
         // console.log(result.BarTime, ' ', InstrumentNameId[`${result["ExchangeInstrumentID"]}`], '  ', result.Close)
-        incomingMessages.push(data); // Always add to incoming queue
+        
+        clients.forEach((value, key) => {
+            clients.get(key)["ws"].send(JSON.stringify({
+                marketdata:
+                    [{
+                        ...result,
+                        name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`]
+                    }]
+            })); // sending array as payload instead on object
+        });
     });
 
     // socket.on("1507-json-full", function (data) {
@@ -253,6 +273,20 @@ export function initializeWebSocket(token, userID) {
 
     process.env.NODE_ENV != 'development' && socket.on("1512-json-full", function (data) {
         // console.log("LTP" + data);
+        const result = JSON.parse(data)
+        // console.log(result.BarTime, ' ', InstrumentNameId[`${result["ExchangeInstrumentID"]}`], '  ', result.Close)
+
+        ltp_stringifier.write({ ...result, name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`] });
+
+        clients.forEach((value, key) => {
+            clients.get(key)["ws"].send(JSON.stringify({
+                marketdata:
+                    [{
+                        ...result,
+                        name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`]
+                    }]
+            })); // sending array as payload instead on object
+        });
     });
 
     // socket.on("1105-json-partial", function (data) {
@@ -273,25 +307,32 @@ export function initializeWebSocket(token, userID) {
 
 };
 
-setInterval(async () => {
-    const release = await mutex.acquire();
-    try {
-        // Move messages from incoming to processing queue
-        while (incomingMessages.length > 0) {
-            processingMessages.push(incomingMessages.shift());
-        }
+// setInterval(async () => {
+//     const release = await mutex.acquire();
+//     try {
+//         // Move messages from incoming to processing queue
+//         while (incomingMessages.length > 0) {
+//             processingMessages.push(incomingMessages.shift());
+//             processingMessages = processingMessages.concat(incomingMessages);
+//             incomingMessages.length = 0;
+//         }
 
-        if (processingMessages.length > 0) {
-            let payloads = processingMessages.map(data => {
-                let payload = JSON.parse(data);
-                return { ...payload, name: InstrumentNameId[`${payload["ExchangeInstrumentID"]}`] };
-            });
-            clients.forEach((value, key) => {
-                clients.get(key)["ws"].send(JSON.stringify({ marketdata: payloads })); // sending array as payload instead on object
-            });
-            processingMessages = []; // Clear after processing
-        }
-    } finally {
-        release();
-    }
-}, PROCESSING_INTERVAL);
+//         if (processingMessages.length > 0) {
+
+//             const payloads = processingMessages.map(data => {
+//                 const payload = JSON.parse(data);
+//                 return { ...payload, name: InstrumentNameId[`${payload["ExchangeInstrumentID"]}`] };
+//             });
+
+//             // Prepare the message to send once
+//             const messageToSend = JSON.stringify({ marketdata: payloads });
+
+//             clients.forEach((value, key) => {
+//                 clients.get(key)["ws"].send(messageToSend); // sending array as payload instead on object
+//             });
+//             processingMessages.length = 0; // More efficient than reassigning
+//         }
+//     } finally {
+//         release();
+//     }
+// }, PROCESSING_INTERVAL);

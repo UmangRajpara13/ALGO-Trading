@@ -5,6 +5,9 @@
 /node_modules
 /client/node_modules
 
+# logs
+/Strategies/*/logs/
+/src/logs/
 
 # testing
 /coverage

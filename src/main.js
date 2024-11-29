@@ -5,8 +5,6 @@ import { ws_server_init, initializeWebSocket, setup_market_log_streams } from ".
 import { master, masterRead } from "./master.js";
 import updateOrAddEnvVariable from "./update_env.js";
 import fs from 'fs';
-import { stringify } from "csv-stringify";
-import { finished } from "stream/promises";
 
 configDotenv();
 
@@ -51,7 +49,6 @@ async function main(loginRequest) {
             fs.mkdir(`./src/logs/${today}`, { recursive: true }, (err) => {
                 if (err) {
                     console.error(`Error creating directory: ${err.message}`);
-                    // reject()
                     process.exit(1)
                 } else {
                     console.log(`Directory ./logs/${today} created or already exists.`);                   

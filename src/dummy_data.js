@@ -2,7 +2,7 @@
 
 export const dummy_spot = [
     {
-        MessageCode: 1505,
+        MessageCode: 1512,
         MessageVersion: 1,
         ApplicationType: 0,
         TokenID: 0,
@@ -20,7 +20,7 @@ export const dummy_spot = [
 
     },
     {
-        MessageCode: 1505,
+        MessageCode: 1512,
         MessageVersion: 1,
         ApplicationType: 0,
         TokenID: 0,
@@ -41,7 +41,7 @@ export const dummy_spot = [
 
 
 export const dummy_strikes_price = [{
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -59,7 +59,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -76,7 +76,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY BANK'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -93,7 +93,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23100CE'
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -109,7 +109,7 @@ export const dummy_strikes_price = [{
     SumOfQtyInToPrice: 0,
     name: 'NIFTY24NOV23100PE'
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -126,7 +126,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23150CE'
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -142,7 +142,7 @@ export const dummy_strikes_price = [{
     SumOfQtyInToPrice: 0,
     name: 'NIFTY24NOV23150PE'
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -159,7 +159,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23200CE'
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -176,7 +176,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23200PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -194,7 +194,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -211,7 +211,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23250PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -229,7 +229,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -246,7 +246,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23300PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -264,7 +264,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -281,7 +281,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23350PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -299,7 +299,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -316,7 +316,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23400PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -334,7 +334,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -351,7 +351,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23450PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -369,7 +369,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -386,7 +386,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23500PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -404,7 +404,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -421,7 +421,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23550PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -439,7 +439,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -456,7 +456,7 @@ export const dummy_strikes_price = [{
     name: 'NIFTY24NOV23600PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -474,7 +474,7 @@ export const dummy_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -495,7 +495,7 @@ export const dummy_strikes_price = [{
 
 
 export const dummy_missing_strikes_price = [{
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -513,7 +513,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -530,7 +530,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY BANK'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -547,7 +547,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23100CE'
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -563,7 +563,7 @@ export const dummy_missing_strikes_price = [{
     SumOfQtyInToPrice: 0,
     name: 'NIFTY24NOV23100PE'
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -580,7 +580,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23150CE'
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -597,7 +597,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23200CE'
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -614,7 +614,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23200PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -632,7 +632,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -649,7 +649,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23250PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -667,7 +667,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -684,7 +684,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23300PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -702,7 +702,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -719,7 +719,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23350PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -737,7 +737,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -754,7 +754,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23400PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -772,7 +772,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -789,7 +789,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23450PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -807,7 +807,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -824,7 +824,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23500PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -842,7 +842,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -859,7 +859,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23550PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -877,7 +877,7 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -894,7 +894,7 @@ export const dummy_missing_strikes_price = [{
     name: 'NIFTY24NOV23600PE'
 
 }, {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
@@ -912,13 +912,467 @@ export const dummy_missing_strikes_price = [{
 
 },
 {
-    MessageCode: 1505,
+    MessageCode: 1512,
     MessageVersion: 1,
     ApplicationType: 0,
     TokenID: 0,
     ExchangeSegment: 1,
     ExchangeInstrumentID: 26000,
     BarTime: 1732201919,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 650.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23650PE'
+
+}
+]
+
+export const dummy_spot_nearest_future_change = [{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732201979,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 23398.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY 50'
+}]
+export const dummy_nearest_future_change = [{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 23390.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY 50'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 50271.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY BANK'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 100.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23100CE'
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 100.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23100PE'
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 150.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23150CE'
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 200.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23200CE'
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 200.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23200PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 250.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23250CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 250.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23250PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 300.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23300CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 300.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23300PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 350.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23350CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 350.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23350PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 400.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23400CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 400.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23400PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 450.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23450CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 450.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23450PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 500.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23500CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 500.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23500PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 550.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23550CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 550.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23550PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 600.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23600CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 600.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23600PE'
+
+}, {
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26001,
+    BarTime: 1732202039,
+    BarVolume: 0,
+    High: 50304.55,
+    Low: 50256.9,
+    Open: 50300.95,
+    Close: 650.9,
+    OpenInterest: 0,
+    SumOfQtyInToPrice: 0,
+    name: 'NIFTY24NOV23650CE'
+
+},
+{
+    MessageCode: 1512,
+    MessageVersion: 1,
+    ApplicationType: 0,
+    TokenID: 0,
+    ExchangeSegment: 1,
+    ExchangeInstrumentID: 26000,
+    BarTime: 1732202039,
     BarVolume: 0,
     High: 50304.55,
     Low: 50256.9,

@@ -9,13 +9,15 @@
 5. unsubscribe
 6. messaging service to strategies  
 7. order placed
-
+ add time in hours mins in log files
+ add console.log in code activity with time in hours mins
 >> strategy
 3. Configuration of Strategies
 4. Deployed To Server
 5. unsubscribe
 6. messaging service to strategies
 7. order placed
+
 
 
 
