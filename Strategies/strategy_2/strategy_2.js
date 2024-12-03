@@ -935,7 +935,7 @@ socket.onmessage = (event) => {
                     }
                     if (payload.type === 'failed') {
                         console.log('nifty_50_unsubscribe_this', nifty_50_unsubscribe_this)
-                        if (nifty_50_unsubscribe_this.includes(payload.name)) JSON.stringify({
+                        if (nifty_50_unsubscribe_this.includes(payload.name)) socket.send(JSON.stringify({
                             unsubscribe: {
                                 id: "strategy_2",
                                 list: [
@@ -944,7 +944,7 @@ socket.onmessage = (event) => {
                                     },
                                 ]
                             }
-                        })
+                        }))
                     }
                 }
                 if (payload.operation === 'Subscribe' && payload.name !== 'NIFTY 50' && payload.name !== 'NIFTY BANK') {
@@ -954,7 +954,7 @@ socket.onmessage = (event) => {
                     }
                     if (payload.type === 'failed') {
 
-                        JSON.stringify({
+                        socket.send(JSON.stringify({
                             subscribe: {
                                 id: "strategy_2",
                                 list: [
@@ -963,7 +963,7 @@ socket.onmessage = (event) => {
                                     },
                                 ]
                             }
-                        })
+                        }))
                     }
                 }
             }
@@ -991,7 +991,7 @@ socket.onmessage = (event) => {
                     }
                     if (payload.type === 'failed') {
                         console.log('nifty_bank_unsubscribe_this', nifty_bank_unsubscribe_this)
-                        if (nifty_bank_unsubscribe_this.includes(payload.name)) JSON.stringify({
+                        if (nifty_bank_unsubscribe_this.includes(payload.name)) socket.send(JSON.stringify({
                             unsubscribe: {
                                 id: "strategy_2",
                                 list: [
@@ -1000,7 +1000,7 @@ socket.onmessage = (event) => {
                                     },
                                 ]
                             }
-                        })
+                        }))
                     }
                 }
                 if (payload.operation === 'Subscribe') {
@@ -1010,7 +1010,7 @@ socket.onmessage = (event) => {
                     }
                     if (payload.type === 'failed') {
                         // if (nifty_bank_subscribe_this.includes(payload.name)) 
-                        JSON.stringify({
+                        socket.send(JSON.stringify({
                             subscribe: {
                                 id: "strategy_2",
                                 list: [
@@ -1019,7 +1019,7 @@ socket.onmessage = (event) => {
                                     },
                                 ]
                             }
-                        })
+                        }))
                     }
                 }
             }
