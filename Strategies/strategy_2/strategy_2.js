@@ -8,7 +8,6 @@ import path from "path";
 
 const mutex = new Mutex();
 
-const today = new Date().toISOString().split('T')[0]; // Get yyyy-mm-dd format
 const now = new Date();
 
 const year = now.getFullYear();
@@ -27,11 +26,11 @@ const date = `${year}-${month}-${day}`
 const init_strategy_file_folders = async () => {
     try {
         // Create logs directory synchronously
-        fs.mkdirSync('./logs', { recursive: true });
+        fs.mkdirSync(path.join(process.cwd(), 'logs'), { recursive: true });
         console.log(`Directory './logs' created or already exists.`);
 
         // Create today's directory inside logs synchronously
-        fs.mkdirSync(path.join('./logs', date), { recursive: true });
+        fs.mkdirSync(path.join(process.cwd(), 'logs', date), { recursive: true });
 
         console.log(`Directory './logs/${date}' created or already exists.`);
     } catch (err) {
@@ -42,12 +41,12 @@ const init_strategy_file_folders = async () => {
 
 init_strategy_file_folders();
 
-const ltp_log_stream = fs.createWriteStream(`./logs/${today}/ltp.csv`, { flags: 'a', encoding: 'utf8' });
-const marketdepth_log_stream = fs.createWriteStream(`./logs/${today}/marketdepth.csv`, { flags: 'a', encoding: 'utf8' });
-const code_activity_log_stream = fs.createWriteStream(`./logs/${today}/activity.txt`, { flags: 'a', encoding: 'utf8' });
+const ltp_log_stream = fs.createWriteStream(path.join(process.cwd(), 'logs', date, 'ltp.csv'), { flags: 'a', encoding: 'utf8' });
+const marketdepth_log_stream = fs.createWriteStream(path.join(process.cwd(), 'logs', date, 'marketdepth.csv'), { flags: 'a', encoding: 'utf8' });
+const code_activity_log_stream = fs.createWriteStream(path.join(process.cwd(), 'logs', date, 'activity.csv'), { flags: 'a', encoding: 'utf8' });
 
-const nifty_50_excel_file_path = `./${date}_${hours}:${minutes}:${seconds}_NIFTY_50.xlsx`
-const nifty_bank_excel_file_path = `./${date}_${hours}:${minutes}:${seconds}_NIFTY_BANK.xlsx`
+const nifty_50_excel_file_path = path.join(process.cwd(), `${date}_${hours}-${minutes}-${seconds}_NIFTY_50.xlsx`)
+const nifty_bank_excel_file_path = path.join(process.cwd(), `${date}_${hours}-${minutes}-${seconds}_NIFTY_BANK.xlsx`)
 
 const socket = new WebSocket("ws://localhost:3000");
 
@@ -513,7 +512,7 @@ async function printMessage() {
         NB_Big_Object.row.nb_p_200_CE + NB_Big_Object.row.nb_p_200_PE, NB_Big_Object.row.nb_p_500_CE + NB_Big_Object.row.nb_p_500_PE, NB_Big_Object.row.nb_nf_CE + NB_Big_Object.row.nb_nf_PE
         ]
 
-        const nb_lowest = Math.min(...jodi.filter(value => !isNaN(value)))
+        const nb_lowest = Math.min(...jodi_bank.filter(value => !isNaN(value)))
 
         worksheet_bank.addRow({
             time: `${currentDate.getHours()}:${currentDate.getMinutes()}`,
@@ -635,11 +634,20 @@ startTimer();
 const handleExit = async () => {
     return new Promise(async (resolve, reject) => {
         if (Object.entries(bigObject).length > 0) {
-            await workbook.xlsx.writeFile(nifty_50_excel_file_path);
+            try {
+                await workbook.xlsx.writeFile(nifty_50_excel_file_path);
+
+            } catch (error) {
+                console.log(error)
+            }
         }
         if (Object.entries(NB_Big_Object).length > 0) {
+            try {
+                await workbook_bank.xlsx.writeFile(nifty_bank_excel_file_path);
 
-            await workbook_bank.xlsx.writeFile(nifty_bank_excel_file_path);
+            } catch (error) {
+                console.log(error)
+            }
         }
         console.log(`Data saved to ${nifty_50_excel_file_path} & ${nifty_bank_excel_file_path}. Exiting...`);
         // Close the writable stream when done
