@@ -1,10 +1,10 @@
-import './TradingHistory.css'
+import './History.css'
 import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import React, { useState } from 'react';
 
-const TradeHistory = () => {
+const History = () => {
 
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState([
@@ -46,4 +46,4 @@ const TradeHistory = () => {
   )
 };
 
-export default TradeHistory;
+export default History;

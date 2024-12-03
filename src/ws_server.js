@@ -13,7 +13,6 @@ let candle_log_stream,
     marketdepth_log_stream,
     sub_unsub_log_stream = null;
 
-const mutex = new Mutex();
 const clients = new Map();
 const InstrumentNameId = {}
 
@@ -23,7 +22,7 @@ const ltp_stringifier = stringify({ header: true });
 const marketdepth_stringifier = stringify({ header: true });
 const sub_unsub_stringifier = stringify({ header: true });
 
-  
+
 const handleExit = async () => {
     // Close the writable streams when done
     try {
@@ -201,10 +200,6 @@ const apiUrl = 'https://mtrade.arhamshare.com/';
 let publishFormat = 'JSON';
 let broadcastMode = 'Full';
 
-let incomingMessages = [];
-let processingMessages = [];
-const PROCESSING_INTERVAL = 50; // milliseconds
-
 
 // Function to initialize the WebSocket connection
 export function initializeWebSocket(token, userID) {
@@ -250,8 +245,7 @@ export function initializeWebSocket(token, userID) {
         const result = JSON.parse(data)
 
         candle_stringifier.write({ ...result, name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`] });
-        // console.log(result.BarTime, ' ', InstrumentNameId[`${result["ExchangeInstrumentID"]}`], '  ', result.Close)
-        
+
         clients.forEach((value, key) => {
             clients.get(key)["ws"].send(JSON.stringify({
                 marketdata:
@@ -259,7 +253,7 @@ export function initializeWebSocket(token, userID) {
                         ...result,
                         name: InstrumentNameId[`${result["ExchangeInstrumentID"]}`]
                     }]
-            })); // sending array as payload instead on object
+            }));
         });
     });
 
@@ -306,33 +300,3 @@ export function initializeWebSocket(token, userID) {
     });
 
 };
-
-// setInterval(async () => {
-//     const release = await mutex.acquire();
-//     try {
-//         // Move messages from incoming to processing queue
-//         while (incomingMessages.length > 0) {
-//             processingMessages.push(incomingMessages.shift());
-//             processingMessages = processingMessages.concat(incomingMessages);
-//             incomingMessages.length = 0;
-//         }
-
-//         if (processingMessages.length > 0) {
-
-//             const payloads = processingMessages.map(data => {
-//                 const payload = JSON.parse(data);
-//                 return { ...payload, name: InstrumentNameId[`${payload["ExchangeInstrumentID"]}`] };
-//             });
-
-//             // Prepare the message to send once
-//             const messageToSend = JSON.stringify({ marketdata: payloads });
-
-//             clients.forEach((value, key) => {
-//                 clients.get(key)["ws"].send(messageToSend); // sending array as payload instead on object
-//             });
-//             processingMessages.length = 0; // More efficient than reassigning
-//         }
-//     } finally {
-//         release();
-//     }
-// }, PROCESSING_INTERVAL);

@@ -14,20 +14,13 @@ function App() {
   const activeTab = useSelector((state) => state.tabs.activeTab);
 
   const dispatch = useDispatch()
-
+ 
 
   useEffect(() => {
-    // axios.get('http://localhost:8000/hello')
-    //   .then((response) => {
-    //     console.log(response); // Log the response data to the console
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error making API call:', error);
-    //   });
-  }, [])
+  }, [])  
 
   return (
-    <div className='container'>
+    <div className='container'> 
       <div className='header'>
         <div className='company-name'>Volatility of Options</div>
         <div className="tab-buttons">

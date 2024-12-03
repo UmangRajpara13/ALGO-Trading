@@ -1,0 +1,34 @@
+{
+  "file": "Strategy_1.js",
+  "language": "javascript",
+  "parameters": {
+    "enable": {
+      "type": "option",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "value": "No"
+    },
+    "startAt": {
+      "type": "time",
+      "value": "16:39"
+    },
+    "endAt": {
+      "type": "time",
+      "value": "11:49"
+    },
+    "mode": {
+      "type": "option",
+      "options": [
+        "Live",
+        "Paper"
+      ],
+      "value": "Paper"
+    },
+    "symbol":{
+      "type":"input",
+      "value":"Infosys"
+    }
+  }
+}

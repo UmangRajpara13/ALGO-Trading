@@ -33,6 +33,28 @@ const init_strategy_file_folders = async () => {
         fs.mkdirSync(path.join(process.cwd(), 'logs', date), { recursive: true });
 
         console.log(`Directory './logs/${date}' created or already exists.`);
+
+        const fileContents = fs.readFileSync(path.join(process.cwd(),'config.json'), 'utf8');
+        const data = JSON.parse(fileContents);
+
+        const now = new Date();
+
+        const [endHour, endMinute] = data.parameters.endAt.value.split(':').map(Number);
+        const endDate = new Date();
+        endDate.setHours(endHour, endMinute, 0, 0);
+
+        if (endDate < now) {
+            endDate.setDate(endDate.getDate() + 1);
+        }
+
+        const timeUntilEnd = endDate - now;
+
+        setTimeout(async () => {
+            console.log(`Terminating strategy due to timeout`);
+            await handleExit();
+            process.exit(0); // Exit the process
+        }, timeUntilEnd);
+
     } catch (err) {
         console.error(`Error creating directory: ${err.message}`);
         process.exit(1); // Exit the process on error

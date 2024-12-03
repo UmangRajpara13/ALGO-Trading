@@ -1,4 +1,3 @@
-
 import { configDotenv } from "dotenv";
 import { Login } from "./login.js";
 import { ws_server_init, initializeWebSocket, setup_market_log_streams } from "./ws_server.js";
@@ -8,17 +7,11 @@ import fs from 'fs';
 
 configDotenv();
 
-const loginRequest = {
-    secretKey: process.env.secretKey,
-    appKey: process.env.appKey,
-    source: process.env.source
-};
-
 const today = new Date().toISOString().split('T')[0]; // Get yyyy-mm-dd format
 
 const port = 3000
 
-async function main(loginRequest) {
+export async function main(loginRequest) {
     console.log('Environment :', process.env.NODE_ENV)
     // Get today's date
     const now = new Date();
@@ -31,6 +24,7 @@ async function main(loginRequest) {
     lastDate.setHours(0, 0, 0, 0); // Set time to midnight for comparison
 
     // Compare dates to check if midnight has passed
+
     if (now > lastDate) {
         console.log("Midnight has passed, Fetching Master...");
         await master();
@@ -51,7 +45,7 @@ async function main(loginRequest) {
                     console.error(`Error creating directory: ${err.message}`);
                     process.exit(1)
                 } else {
-                    console.log(`Directory ./logs/${today} created or already exists.`);                   
+                    console.log(`Directory ./logs/${today} created or already exists.`);
                     setup_market_log_streams(today);
                     resolve();
                 }
@@ -71,4 +65,3 @@ async function main(loginRequest) {
     });
 }
 
-main(loginRequest)

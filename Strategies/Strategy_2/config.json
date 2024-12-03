@@ -1,0 +1,26 @@
+{
+  "file": "Strategy_2.js",
+  "language": "javascript",
+  "parameters": {
+    "enable": {
+      "type": "option",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "value": "Yes"
+    },
+    "startAt": {
+      "type": "time",
+      "value": "16:58"
+    },
+    "endAt": {
+      "type": "time",
+      "value": "16:59"
+    },
+    "symbol":{
+      "type":"input",
+      "value":"Tata"
+    }
+  }
+}

@@ -747,14 +747,14 @@ socket.onmessage = (event) => {
                 if (data.MessageCode === 1502) {
                     // console.log('BIDS',data.Bids,'ASKS', data.Asks)
                 }
-            });
+            }); 
             break;
         case "message":
             console.log(payload?.operation, payload?.name, payload?.type, payload?.eventCode)
             if (payload.name.startsWith('NIFTY')) {
                 if (payload.operation === 'Unsubscribe' && payload.name !== 'NIFTY 50' && payload.name !== 'NIFTY BANK') {
                     if (payload.type === 'success') {
-                        nifty_50_subscribed_list = nifty_50_subscribed_list.filter(item => item !== payload.name);
+                         nifty_50_subscribed_list = nifty_50_subscribed_list.filter(item => item !== payload.name);
                         nifty_50_unsubscribe_this = nifty_50_unsubscribe_this.filter(item => item !== payload.name);
                         if (nifty_50_subscribe_this.length > 0) {
                             const sub_this = nifty_50_subscribe_this[0]

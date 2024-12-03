@@ -1,11 +1,10 @@
 import './Tabs.css'
-
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import Tab1 from './TradingHistory';
-import Tab2 from './Positions';
-import Tab3 from './Tab3';
-import TradeConfig from './StrategyConfig';
+import History from './History/History';
+import Config from './Config/Config';
+import Positions from './Positions/Positions';
+import Orders from './Orders/Orders';
 
 const Tabs = () => {
   const dispatch = useDispatch();
@@ -15,13 +14,15 @@ const Tabs = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
-        return <Tab1 />;
+        return <History />;
       case 1:
-        return <Tab2 />;
+        return <Positions />;
+
       case 2:
-        return <Tab3 />;
+        return <Orders/>;
+
       case 3:
-        return <TradeConfig />;
+        return <Config/>;
       default:
         return null;
     }
