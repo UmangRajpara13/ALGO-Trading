@@ -1,16 +1,14 @@
-
-
 >> features
 
 1. Trading history
 2. Live Positions
 3. Configuration of Strategies
 4. Deployed To Server
-5. unsubscribe
 6. messaging service to strategies  
 7. order placed
  add time in hours mins in log files
  add console.log in code activity with time in hours mins
+
 >> strategy
 3. Configuration of Strategies
 4. Deployed To Server
@@ -19,9 +17,8 @@
 7. order placed
 
 
+on midnight close logstreams and open new
 
-
-first it should work for single user perfectly (i.e. complete trade management)
 first it should work for single user perfectly (i.e. complete trade management)
 then >Login feature< to accommodate multiple users 
 

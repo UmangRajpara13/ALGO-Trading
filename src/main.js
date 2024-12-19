@@ -1,6 +1,6 @@
 import { configDotenv } from "dotenv";
-import { Login } from "./login.js";
-import { ws_server_init, initializeWebSocket, setup_market_log_streams } from "./ws_server.js";
+import { Login, LoginInteractive } from "./login.js";
+import { ws_server_init, initializeWebSocket, setup_market_log_streams, interactiveStreaming } from "./ws_server.js";
 import { master, masterRead } from "./master.js";
 import updateOrAddEnvVariable from "./update_env.js";
 import fs from 'fs';
@@ -63,5 +63,19 @@ export async function main(loginRequest) {
     }).catch(err => {
         console.log(err)
     });
+
+
+    var interactiveRequest = {
+        secretKey: process.env.interactive_secretkey,
+        appKey: process.env.interactive_appkey,
+        source: 'WEBAPI',
+    };
+    LoginInteractive(interactiveRequest).then(() => {
+        configDotenv({ override: true });
+        interactiveStreaming(process.env.interactive_token, process.env.userID);
+    }).catch(err => {
+        console.log(err)
+    });
+
 }
 

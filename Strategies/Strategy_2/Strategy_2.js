@@ -34,7 +34,7 @@ const init_strategy_file_folders = async () => {
 
         console.log(`Directory './logs/${date}' created or already exists.`);
 
-        const fileContents = fs.readFileSync(path.join(process.cwd(),'config.json'), 'utf8');
+        const fileContents = fs.readFileSync(path.join(process.cwd(), 'config.json'), 'utf8');
         const data = JSON.parse(fileContents);
 
         const now = new Date();
@@ -139,10 +139,10 @@ const nifty_bank_columns = [
 
     { header: 'NIFTY BANK Spot', key: 'nifty_bank_spot', width: 15 },
 
-    { header: '-500 CE', key: 'nb_m_500_CE', width: 15 },
-    { header: '-500 PE', key: 'nb_m_500_PE', width: 15 },
-    { header: '-400 CE', key: 'nb_m_400_CE', width: 15 },
-    { header: '-400 PE', key: 'nb_m_400_PE', width: 15 },
+    // { header: '-500 CE', key: 'nb_m_500_CE', width: 15 },
+    // { header: '-500 PE', key: 'nb_m_500_PE', width: 15 },
+    // { header: '-400 CE', key: 'nb_m_400_CE', width: 15 },
+    // { header: '-400 PE', key: 'nb_m_400_PE', width: 15 },
     { header: '-300 CE', key: 'nb_m_300_CE', width: 15 },
     { header: '-300 PE', key: 'nb_m_300_PE', width: 15 },
     { header: '-200 CE', key: 'nb_m_200_CE', width: 15 },
@@ -156,10 +156,10 @@ const nifty_bank_columns = [
     { header: '+200 PE', key: 'nb_p_200_PE', width: 15 },
     { header: '+300 CE', key: 'nb_p_300_CE', width: 15 },
     { header: '+300 PE', key: 'nb_p_300_PE', width: 15 },
-    { header: '+400 CE', key: 'nb_p_400_CE', width: 15 },
-    { header: '+400 PE', key: 'nb_p_400_PE', width: 15 },
-    { header: '+500 CE', key: 'nb_p_500_CE', width: 15 },
-    { header: '+500 PE', key: 'nb_p_500_PE', width: 15 },
+    // { header: '+400 CE', key: 'nb_p_400_CE', width: 15 },
+    // { header: '+400 PE', key: 'nb_p_400_PE', width: 15 },
+    // { header: '+500 CE', key: 'nb_p_500_CE', width: 15 },
+    // { header: '+500 PE', key: 'nb_p_500_PE', width: 15 },
 
     { header: 'Bank Future CE', key: 'nb_nf_CE', width: 15 },
     { header: 'Bank Future PE', key: 'nb_nf_PE', width: 15 },
@@ -167,8 +167,8 @@ const nifty_bank_columns = [
     { header: '', key: 'bank_blank', width: 15 },
 
     // sum of CE & PE
-    { header: '-500 CE+PE', key: 'nb_m_500_CE_PE', width: 15 },
-    { header: '-400 CE+PE', key: 'nb_m_400_CE_PE', width: 15 },
+    // { header: '-500 CE+PE', key: 'nb_m_500_CE_PE', width: 15 },
+    // { header: '-400 CE+PE', key: 'nb_m_400_CE_PE', width: 15 },
     { header: '-300 CE+PE', key: 'nb_m_300_CE_PE', width: 15 },
     { header: '-200 CE+PE', key: 'nb_m_200_CE_PE', width: 15 },
     { header: '-100 CE+PE', key: 'nb_m_100_CE_PE', width: 15 },
@@ -178,8 +178,8 @@ const nifty_bank_columns = [
     { header: '+100 CE+PE', key: 'nb_p_100_CE_PE', width: 15 },
     { header: '+200 CE+PE', key: 'nb_p_200_CE_PE', width: 15 },
     { header: '+300 CE+PE', key: 'nb_p_300_CE_PE', width: 15 },
-    { header: '+400 CE+PE', key: 'nb_p_400_CE_PE', width: 15 },
-    { header: '+500 CE+PE', key: 'nb_p_500_CE_PE', width: 15 },
+    // { header: '+400 CE+PE', key: 'nb_p_400_CE_PE', width: 15 },
+    // { header: '+500 CE+PE', key: 'nb_p_500_CE_PE', width: 15 },
 
     { header: 'FUTURE CE+PE', key: 'nb_nf_CE_PE', width: 15 },
 ]
@@ -292,14 +292,10 @@ function Manage_Subscriptions_For_Nifty_50() {
         nifty_50_unsubscribe_this.forEach(item => {
             socket.send(
                 JSON.stringify({
-                    unsubscribe: {
-                        id: "strategy_2",
-                        list: [
-                            {
-                                segment: "nsefo", instrument: item, eventCode: 1512
-                            },
-                        ]
-                    }
+                    type: 'unsubscribe',
+                    segment: "nsefo",
+                    name: item,
+                    eventCode: 1512
                 })
             )
         })
@@ -311,14 +307,10 @@ function Manage_Subscriptions_For_Nifty_50() {
         nifty_50_subscribe_this.forEach(item => {
             socket.send(
                 JSON.stringify({
-                    subscribe: {
-                        id: "strategy_2",
-                        list: [
-                            {
-                                segment: "nsefo", instrument: item, eventCode: 1512
-                            },
-                        ]
-                    }
+                    type: 'subscribe',
+                    segment: "nsefo",
+                    name: item,
+                    eventCode: 1512
                 })
             )
         })
@@ -332,9 +324,9 @@ function Calculate_Strikes_For_Nifty_Bank() {
 
     for (let j = 0; j < types.length; j++) {
 
-        nifty_bank_strike_price = 500
+        nifty_bank_strike_price = 300
 
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 7; i++) {
             nifty_bank_strikes.push(`BANKNIFTY24DEC${last_nf_bank + nifty_bank_strike_price}${types[j]}`)
 
             if (nifty_bank_strike_price > 0) {
@@ -381,14 +373,10 @@ function Manage_Subscriptions_For_Nifty_Bank() {
         nifty_bank_unsubscribe_this.forEach(item => {
             socket.send(
                 JSON.stringify({
-                    unsubscribe: {
-                        id: "strategy_2",
-                        list: [
-                            {
-                                segment: "nsefo", instrument: item, eventCode: 1512
-                            },
-                        ]
-                    }
+                    type: 'unsubscribe',
+                    segment: "nsefo",
+                    name: item,
+                    eventCode: 1512
                 })
             )
         })
@@ -402,14 +390,10 @@ function Manage_Subscriptions_For_Nifty_Bank() {
             console.log(item)
             socket.send(
                 JSON.stringify({
-                    subscribe: {
-                        id: "strategy_2",
-                        list: [
-                            {
-                                segment: "nsefo", instrument: item, eventCode: 1512
-                            },
-                        ]
-                    }
+                    type: 'subscribe',
+                    segment: "nsefo",
+                    name: item,
+                    eventCode: 1512
                 })
             )
         })
@@ -528,12 +512,16 @@ async function printMessage() {
 
         };
 
-        const jodi_bank = [NB_Big_Object.row.nb_m_500_CE + NB_Big_Object.row.nb_m_500_PE, NB_Big_Object.row.nb_m_200_CE + NB_Big_Object.row.nb_m_200_PE,
-        NB_Big_Object.row.nb_m_300_CE + NB_Big_Object.row.nb_m_300_PE, NB_Big_Object.row.nb_m_100_CE + NB_Big_Object.row.nb_m_100_PE, NB_Big_Object.row.nb_m_400_CE + NB_Big_Object.row.nb_m_400_PE,
-        NB_Big_Object.row.nb_p_400_CE + NB_Big_Object.row.nb_p_400_PE, NB_Big_Object.row.nb_p_100_CE + NB_Big_Object.row.nb_p_100_PE, NB_Big_Object.row.nb_p_300_CE + NB_Big_Object.row.nb_p_300_PE,
-        NB_Big_Object.row.nb_p_200_CE + NB_Big_Object.row.nb_p_200_PE, NB_Big_Object.row.nb_p_500_CE + NB_Big_Object.row.nb_p_500_PE, NB_Big_Object.row.nb_nf_CE + NB_Big_Object.row.nb_nf_PE
+        // const jodi_bank = [NB_Big_Object.row.nb_m_500_CE + NB_Big_Object.row.nb_m_500_PE, NB_Big_Object.row.nb_m_200_CE + NB_Big_Object.row.nb_m_200_PE,
+        // NB_Big_Object.row.nb_m_300_CE + NB_Big_Object.row.nb_m_300_PE, NB_Big_Object.row.nb_m_100_CE + NB_Big_Object.row.nb_m_100_PE, NB_Big_Object.row.nb_m_400_CE + NB_Big_Object.row.nb_m_400_PE,
+        // NB_Big_Object.row.nb_p_400_CE + NB_Big_Object.row.nb_p_400_PE, NB_Big_Object.row.nb_p_100_CE + NB_Big_Object.row.nb_p_100_PE, NB_Big_Object.row.nb_p_300_CE + NB_Big_Object.row.nb_p_300_PE,
+        // NB_Big_Object.row.nb_p_200_CE + NB_Big_Object.row.nb_p_200_PE, NB_Big_Object.row.nb_p_500_CE + NB_Big_Object.row.nb_p_500_PE, NB_Big_Object.row.nb_nf_CE + NB_Big_Object.row.nb_nf_PE
+        // ]
+        const jodi_bank = [NB_Big_Object.row.nb_m_200_CE + NB_Big_Object.row.nb_m_200_PE,
+        NB_Big_Object.row.nb_m_300_CE + NB_Big_Object.row.nb_m_300_PE, NB_Big_Object.row.nb_m_100_CE + NB_Big_Object.row.nb_m_100_PE,
+        NB_Big_Object.row.nb_p_100_CE + NB_Big_Object.row.nb_p_100_PE, NB_Big_Object.row.nb_p_300_CE + NB_Big_Object.row.nb_p_300_PE,
+        NB_Big_Object.row.nb_p_200_CE + NB_Big_Object.row.nb_p_200_PE, NB_Big_Object.row.nb_nf_CE + NB_Big_Object.row.nb_nf_PE
         ]
-
         const nb_lowest = Math.min(...jodi_bank.filter(value => !isNaN(value)))
 
         worksheet_bank.addRow({
@@ -541,10 +529,10 @@ async function printMessage() {
 
             "nifty_bank_spot": NB_Big_Object.nifty_bank_spot % 1 > 0.5 ? Math.ceil(NB_Big_Object.nifty_bank_spot) : Math.floor(NB_Big_Object.nifty_bank_spot),
 
-            nb_m_500_CE: NB_Big_Object.row.nb_m_500_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_500_CE) : Math.floor(NB_Big_Object.row.nb_m_500_CE),
-            nb_m_500_PE: NB_Big_Object.row.nb_m_500_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_500_PE) : Math.floor(NB_Big_Object.row.nb_m_500_PE),
-            nb_m_400_CE: NB_Big_Object.row.nb_m_400_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_400_CE) : Math.floor(NB_Big_Object.row.nb_m_400_CE),
-            nb_m_400_PE: NB_Big_Object.row.nb_m_400_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_400_PE) : Math.floor(NB_Big_Object.row.nb_m_400_PE),
+            // nb_m_500_CE: NB_Big_Object.row.nb_m_500_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_500_CE) : Math.floor(NB_Big_Object.row.nb_m_500_CE),
+            // nb_m_500_PE: NB_Big_Object.row.nb_m_500_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_500_PE) : Math.floor(NB_Big_Object.row.nb_m_500_PE),
+            // nb_m_400_CE: NB_Big_Object.row.nb_m_400_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_400_CE) : Math.floor(NB_Big_Object.row.nb_m_400_CE),
+            // nb_m_400_PE: NB_Big_Object.row.nb_m_400_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_400_PE) : Math.floor(NB_Big_Object.row.nb_m_400_PE),
             nb_m_300_CE: NB_Big_Object.row.nb_m_300_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_300_CE) : Math.floor(NB_Big_Object.row.nb_m_300_CE),
             nb_m_300_PE: NB_Big_Object.row.nb_m_300_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_300_PE) : Math.floor(NB_Big_Object.row.nb_m_300_PE),
             nb_m_200_CE: NB_Big_Object.row.nb_m_200_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_m_200_CE) : Math.floor(NB_Big_Object.row.nb_m_200_CE),
@@ -561,13 +549,13 @@ async function printMessage() {
             nb_p_200_PE: NB_Big_Object.row.nb_p_200_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_200_PE) : Math.floor(NB_Big_Object.row.nb_p_200_PE),
             nb_p_300_CE: NB_Big_Object.row.nb_p_300_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_300_CE) : Math.floor(NB_Big_Object.row.nb_p_300_CE),
             nb_p_300_PE: NB_Big_Object.row.nb_p_300_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_300_PE) : Math.floor(NB_Big_Object.row.nb_p_300_PE),
-            nb_p_400_CE: NB_Big_Object.row.nb_p_400_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_400_CE) : Math.floor(NB_Big_Object.row.nb_p_400_CE),
-            nb_p_400_PE: NB_Big_Object.row.nb_p_400_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_400_PE) : Math.floor(NB_Big_Object.row.nb_p_400_PE),
-            nb_p_500_CE: NB_Big_Object.row.nb_p_500_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_500_CE) : Math.floor(NB_Big_Object.row.nb_p_500_CE),
-            nb_p_500_PE: NB_Big_Object.row.nb_p_500_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_500_PE) : Math.floor(NB_Big_Object.row.nb_p_500_PE),
+            // nb_p_400_CE: NB_Big_Object.row.nb_p_400_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_400_CE) : Math.floor(NB_Big_Object.row.nb_p_400_CE),
+            // nb_p_400_PE: NB_Big_Object.row.nb_p_400_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_400_PE) : Math.floor(NB_Big_Object.row.nb_p_400_PE),
+            // nb_p_500_CE: NB_Big_Object.row.nb_p_500_CE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_500_CE) : Math.floor(NB_Big_Object.row.nb_p_500_CE),
+            // nb_p_500_PE: NB_Big_Object.row.nb_p_500_PE % 1 > 0.5 ? Math.ceil(NB_Big_Object.row.nb_p_500_PE) : Math.floor(NB_Big_Object.row.nb_p_500_PE),
 
-            nb_m_500_CE_PE: jodi_bank[0] % 1 > 0.5 ? Math.ceil(jodi_bank[0]) : Math.floor(jodi_bank[0]),
-            nb_m_400_CE_PE: jodi_bank[1] % 1 > 0.5 ? Math.ceil(jodi_bank[1]) : Math.floor(jodi_bank[1]),
+            // nb_m_500_CE_PE: jodi_bank[0] % 1 > 0.5 ? Math.ceil(jodi_bank[0]) : Math.floor(jodi_bank[0]),
+            // nb_m_400_CE_PE: jodi_bank[1] % 1 > 0.5 ? Math.ceil(jodi_bank[1]) : Math.floor(jodi_bank[1]),
             nb_m_300_CE_PE: jodi_bank[2] % 1 > 0.5 ? Math.ceil(jodi_bank[2]) : Math.floor(jodi_bank[2]),
             nb_m_200_CE_PE: jodi_bank[4] % 1 > 0.5 ? Math.ceil(jodi_bank[4]) : Math.floor(jodi_bank[4]),
             nb_m_100_CE_PE: jodi_bank[3] % 1 > 0.5 ? Math.ceil(jodi_bank[3]) : Math.floor(jodi_bank[3]),
@@ -577,8 +565,8 @@ async function printMessage() {
             nb_p_100_CE_PE: jodi_bank[6] % 1 > 0.5 ? Math.ceil(jodi_bank[6]) : Math.floor(jodi_bank[6]),
             nb_p_200_CE_PE: jodi_bank[5] % 1 > 0.5 ? Math.ceil(jodi_bank[5]) : Math.floor(jodi_bank[5]),
             nb_p_300_CE_PE: jodi_bank[7] % 1 > 0.5 ? Math.ceil(jodi_bank[7]) : Math.floor(jodi_bank[7]),
-            nb_p_400_CE_PE: jodi_bank[8] % 1 > 0.5 ? Math.ceil(jodi_bank[8]) : Math.floor(jodi_bank[8]),
-            nb_p_500_CE_PE: jodi_bank[9] % 1 > 0.5 ? Math.ceil(jodi_bank[9]) : Math.floor(jodi_bank[9]),
+            // nb_p_400_CE_PE: jodi_bank[8] % 1 > 0.5 ? Math.ceil(jodi_bank[8]) : Math.floor(jodi_bank[8]),
+            // nb_p_500_CE_PE: jodi_bank[9] % 1 > 0.5 ? Math.ceil(jodi_bank[9]) : Math.floor(jodi_bank[9]),
 
             nb_nf_CE_PE: jodi_bank[10] % 1 > 0.5 ? Math.ceil(jodi_bank[10]) : Math.floor(jodi_bank[10]),
         })
@@ -599,8 +587,8 @@ async function printMessage() {
 
                     ...NB_Big_Object.strikes,
 
-                    nb_m_500_CE_PE: NB_Big_Object.strikes.nb_m_500_CE,
-                    nb_m_400_CE_PE: NB_Big_Object.strikes.nb_m_400_CE,
+                    // nb_m_500_CE_PE: NB_Big_Object.strikes.nb_m_500_CE,
+                    // nb_m_400_CE_PE: NB_Big_Object.strikes.nb_m_400_CE,
                     nb_m_300_CE_PE: NB_Big_Object.strikes.nb_m_300_CE,
                     nb_m_200_CE_PE: NB_Big_Object.strikes.nb_m_200_CE,
                     nb_m_100_CE_PE: NB_Big_Object.strikes.nb_m_100_CE,
@@ -610,8 +598,8 @@ async function printMessage() {
                     nb_p_100_CE_PE: NB_Big_Object.strikes.nb_p_100_CE,
                     nb_p_200_CE_PE: NB_Big_Object.strikes.nb_p_200_CE,
                     nb_p_300_CE_PE: NB_Big_Object.strikes.nb_p_300_CE,
-                    nb_p_400_CE_PE: NB_Big_Object.strikes.nb_p_400_CE,
-                    nb_p_500_CE_PE: NB_Big_Object.strikes.nb_p_500_CE,
+                    // nb_p_400_CE_PE: NB_Big_Object.strikes.nb_p_400_CE,
+                    // nb_p_500_CE_PE: NB_Big_Object.strikes.nb_p_500_CE,
 
                     nb_nf_CE_PE: NB_Big_Object.strikes.nb_nf_CE,
 
@@ -721,28 +709,45 @@ process.on('uncaughtException', async (error) => {
 
 socket.onopen = () => {
     console.log("Connected to server");
+
+    // socket.send(
+    //     JSON.stringify({
+    //         clientId: {
+    //             id: "strategy_2"
+    //         }
+    //     })
+    // )
+    // socket.send(
+    //     JSON.stringify({
+    //         subscribe: {
+    //             id: "strategy_2",
+    //             list: [
+    //                 {
+    //                     segment: "index", instrument: "NIFTY 50", eventCode: 1512
+    //                 },
+    //                 {
+    //                     segment: "index", instrument: "NIFTY BANK", eventCode: 1512
+    //                 }
+    //             ]
+    //         }
+    //     })
+    // );
     socket.send(
         JSON.stringify({
-            clientId: {
-                id: "strategy_2"
-            }
+            type: 'subscribe',
+            segment: "index",
+            name: "NIFTY 50",
+            eventCode: 1512
         })
     )
     socket.send(
         JSON.stringify({
-            subscribe: {
-                id: "strategy_2",
-                list: [
-                    {
-                        segment: "index", instrument: "NIFTY 50", eventCode: 1512
-                    },
-                    {
-                        segment: "index", instrument: "NIFTY BANK", eventCode: 1512
-                    }
-                ]
-            }
+            type: 'subscribe',
+            segment: "index",
+            name: "NIFTY BANK",
+            eventCode: 1512
         })
-    );
+    )
 };
 
 // add error messages for instrument not found
@@ -867,8 +872,8 @@ socket.onmessage = (event) => {
 
                                 ...NB_Big_Object.strikes,
 
-                                nb_m_500_CE_PE: NB_Big_Object.strikes.nb_m_500_CE,
-                                nb_m_400_CE_PE: NB_Big_Object.strikes.nb_m_400_CE,
+                                // nb_m_500_CE_PE: NB_Big_Object.strikes.nb_m_500_CE,
+                                // nb_m_400_CE_PE: NB_Big_Object.strikes.nb_m_400_CE,
                                 nb_m_300_CE_PE: NB_Big_Object.strikes.nb_m_300_CE,
                                 nb_m_200_CE_PE: NB_Big_Object.strikes.nb_m_200_CE,
                                 nb_m_100_CE_PE: NB_Big_Object.strikes.nb_m_100_CE,
@@ -878,8 +883,8 @@ socket.onmessage = (event) => {
                                 nb_p_100_CE_PE: NB_Big_Object.strikes.nb_p_100_CE,
                                 nb_p_200_CE_PE: NB_Big_Object.strikes.nb_p_200_CE,
                                 nb_p_300_CE_PE: NB_Big_Object.strikes.nb_p_300_CE,
-                                nb_p_400_CE_PE: NB_Big_Object.strikes.nb_p_400_CE,
-                                nb_p_500_CE_PE: NB_Big_Object.strikes.nb_p_500_CE,
+                                // nb_p_400_CE_PE: NB_Big_Object.strikes.nb_p_400_CE,
+                                // nb_p_500_CE_PE: NB_Big_Object.strikes.nb_p_500_CE,
 
                                 nb_nf_CE_PE: NB_Big_Object.strikes.nb_nf_CE,
 
@@ -943,30 +948,26 @@ socket.onmessage = (event) => {
                             nifty_50_subscribe_this = nifty_50_subscribe_this.slice(1)
                             socket.send(
                                 JSON.stringify({
-                                    subscribe: {
-                                        id: "strategy_2",
-                                        list: [
-                                            {
-                                                segment: "nsefo", instrument: sub_this, eventCode: 1512
-                                            },
-                                        ]
-                                    }
+                                    type: 'subscribe',
+                                    segment: "nsefo",
+                                    name: sub_this,
+                                    eventCode: 1512
                                 })
                             )
                         }
                     }
                     if (payload.type === 'failed') {
                         console.log('nifty_50_unsubscribe_this', nifty_50_unsubscribe_this)
-                        if (nifty_50_unsubscribe_this.includes(payload.name)) socket.send(JSON.stringify({
-                            unsubscribe: {
-                                id: "strategy_2",
-                                list: [
-                                    {
-                                        segment: "nsefo", instrument: payload.name, eventCode: 1512
-                                    },
-                                ]
-                            }
-                        }))
+                        if (nifty_50_unsubscribe_this.includes(payload.name)) {
+                            socket.send(
+                                JSON.stringify({
+                                    type: 'unsubscribe',
+                                    segment: "nsefo",
+                                    name: payload.name,
+                                    eventCode: 1512
+                                })
+                            )
+                        }
                     }
                 }
                 if (payload.operation === 'Subscribe' && payload.name !== 'NIFTY 50' && payload.name !== 'NIFTY BANK') {
@@ -975,17 +976,14 @@ socket.onmessage = (event) => {
                         nifty_50_subscribed_list.push(payload.name)
                     }
                     if (payload.type === 'failed') {
-
-                        socket.send(JSON.stringify({
-                            subscribe: {
-                                id: "strategy_2",
-                                list: [
-                                    {
-                                        segment: "nsefo", instrument: payload.name, eventCode: 1512
-                                    },
-                                ]
-                            }
-                        }))
+                        socket.send(
+                            JSON.stringify({
+                                type: 'subscribe',
+                                segment: "nsefo",
+                                name: payload.name,
+                                eventCode: 1512
+                            })
+                        )
                     }
                 }
             }
@@ -999,30 +997,26 @@ socket.onmessage = (event) => {
                             nifty_bank_subscribe_this = nifty_bank_subscribe_this.slice(1)
                             socket.send(
                                 JSON.stringify({
-                                    subscribe: {
-                                        id: "strategy_2",
-                                        list: [
-                                            {
-                                                segment: "nsefo", instrument: sub_this, eventCode: 1512
-                                            },
-                                        ]
-                                    }
+                                    type: 'subscribe',
+                                    segment: "nsefo",
+                                    name: sub_this,
+                                    eventCode: 1512
                                 })
                             )
+
                         }
                     }
                     if (payload.type === 'failed') {
                         console.log('nifty_bank_unsubscribe_this', nifty_bank_unsubscribe_this)
-                        if (nifty_bank_unsubscribe_this.includes(payload.name)) socket.send(JSON.stringify({
-                            unsubscribe: {
-                                id: "strategy_2",
-                                list: [
-                                    {
-                                        segment: "nsefo", instrument: payload.name, eventCode: 1512
-                                    },
-                                ]
-                            }
-                        }))
+                        if (nifty_bank_unsubscribe_this.includes(payload.name))
+                            socket.send(
+                                JSON.stringify({
+                                    type: 'unsubscribe',
+                                    segment: "nsefo",
+                                    name: payload.name,
+                                    eventCode: 1512
+                                })
+                            )
                     }
                 }
                 if (payload.operation === 'Subscribe') {
@@ -1032,16 +1026,14 @@ socket.onmessage = (event) => {
                     }
                     if (payload.type === 'failed') {
                         // if (nifty_bank_subscribe_this.includes(payload.name)) 
-                        socket.send(JSON.stringify({
-                            subscribe: {
-                                id: "strategy_2",
-                                list: [
-                                    {
-                                        segment: "nsefo", instrument: payload.name, eventCode: 1512
-                                    },
-                                ]
-                            }
-                        }))
+                        socket.send(
+                            JSON.stringify({
+                                type: 'subscribe',
+                                segment: "nsefo",
+                                name: payload.name,
+                                eventCode: 1512
+                            })
+                        )
                     }
                 }
             }

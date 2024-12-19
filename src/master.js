@@ -222,7 +222,7 @@ export async function masterRead(segment) {
 export async function GetInstrumentId(instrument) {
     return new Promise(async (resolve, reject) => {
 
-        const searchKey = instrument.instrument
+        const searchKey = instrument.name
         const valueColumn = 2; // Column A=1, B=2 ; 2 because all exchangeInstrumentId is in column 2
         const eventCode = instrument.eventCode; // Column A=1, B=2 ; 2 because all exchangeInstrumentId is in column 2
 
@@ -238,7 +238,7 @@ export async function GetInstrumentId(instrument) {
         let keyColumn;
 
         if (instrument.segment === 'index') {
-            if (instrument.instrument.startsWith('NIFTY')) {
+            if (instrument.name.startsWith('NIFTY')) {
                 exchangeSegment = 1;
             }
             else {

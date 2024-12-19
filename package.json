@@ -23,6 +23,7 @@
     "express": "^4.21.1",
     "socket.io-client": "^2.5.0",
     "ws": "^8.18.0",
+    "xts-interactive-api": "^3.0.3",
     "xts-marketdata-api": "^3.0.10"
   },
   "devDependencies": {
