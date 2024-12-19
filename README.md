@@ -1,7 +1,7 @@
 # 📈 ALGO Trading
 
 ## Overview
-The **Volatility of options** is a powerful application that provides real-time stock market updates and allows users to create, manage, and optimize their trading strategies. Built with a Node.js Express server, this project enables users to implement their strategies in various programming languages such as **Java**, **JavaScript**, and **Python**. Users can connect their custom strategies to the backend via WebSocket, facilitating seamless communication with the server. The dynamic front-end interface allows for easy parameter modification and scheduling of trading activities.
+**ALGO Trading** is an application that provides real-time stock market updates and allows users to create, manage, and optimize their trading strategies. Built with a Node.js Express server, this project enables users to implement their strategies in various programming languages such as **Java**, **JavaScript**, and **Python**. Users can connect their custom strategies to the backend via WebSocket, facilitating seamless communication with the server. The dynamic front-end interface allows for easy parameter modification including scheduling of trading activities.
 
 ## Features
 - 🔄 **Live Stock Market Updates**: Listen to real-time stock market data and updates.
@@ -16,25 +16,24 @@ The **Volatility of options** is a powerful application that provides real-time 
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
 
 ## Installation
 To get started, follow these steps:
 
-1. Clone the repository:
+Clone the repository:  
    
-    git clone https://github.com/yourusername/stock-market-strategy-listener.git
-    cd stock-market-strategy-listener
+    git clone https://github.com/UmangRajpara13/ALGO-Trading.git
+    cd ALGO-Trading  
    
-3. Install the necessary dependencies for the backend:  
+Install the necessary dependencies for the backend:    
 
-    npm install && cd client && npm install && cd..
+    npm install && cd client && npm install && cd..  
    
-5. Start the Express server:  
+Start the Express server:  
 
-    npm start
+    npm start  
    
-6. Ensure your frontend is set up correctly to connect to the backend.
+Ensure your frontend is set up correctly to connect to the backend.  
 
 ## Usage
 Once the application is running:
