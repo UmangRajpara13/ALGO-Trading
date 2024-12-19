@@ -1,4 +1,4 @@
-# 📈 Stock Market Strategy Listener
+# 📈 ALGO Trading
 
 ## Overview
 The **Stock Market Strategy Listener** is a powerful application that provides real-time stock market updates and allows users to create, manage, and optimize their trading strategies. Built with a Node.js Express server, this project enables users to implement their strategies in various programming languages such as **Java**, **JavaScript**, and **Python**. Users can connect their custom strategies to the backend via WebSocket, facilitating seamless communication with the server. The dynamic front-end interface allows for easy parameter modification and scheduling of trading activities.
